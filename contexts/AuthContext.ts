@@ -1,13 +1,9 @@
 import * as React from 'react'
 
-export type LoginProps = {
-  authToken: string
-}
-
 type Props = {
   loggedOut: boolean
   user?: User
-  login?(props: LoginProps): void
+  login?(authToken: string): void
   logout?(): void
 }
 

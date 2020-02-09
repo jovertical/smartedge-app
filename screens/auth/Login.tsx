@@ -24,7 +24,7 @@ type Fields = {
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
-  const [email, setEmail] = React.useState('kimberly21claire@gmail.com')
+  const [email, setEmail] = React.useState('josh.sisor@gmail.com')
   const [password, setPassword] = React.useState('smartedge')
   const [errors, setErrors] = React.useState<Fields>({})
 
@@ -50,7 +50,7 @@ export default function Login() {
 
       case 200:
         const authToken = await res.text()
-        login({ authToken })
+        login(authToken)
         break
     }
   }
