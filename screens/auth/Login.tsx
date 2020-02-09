@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { View, StyleSheet, Button, Text, TextInput } from 'react-native'
 import Constants from 'expo-constants'
 import { AuthContext } from '@contexts/AuthContext'
 import { API_URL } from '@constants/config'
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState('kuyajovert@example.com')
+  const [password, setPassword] = React.useState('password')
   const [errors, setErrors] = React.useState([])
 
   const handleLogin = async () => {
@@ -15,12 +15,12 @@ export default function Login() {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email,
         password,
-        device_name: Constants.deviceId,
+        device_name: Constants.deviceId
       })
     })
 

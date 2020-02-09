@@ -5,8 +5,12 @@ export type LoginProps = {
 }
 
 type Props = {
+  loggedOut: boolean
+  user?: User
   login?(props: LoginProps): void
   logout?(): void
 }
 
-export const AuthContext = React.createContext<Props>({})
+export const AuthContext = React.createContext<Props>({
+  loggedOut: false
+})

@@ -9,7 +9,6 @@
     "format": "prettier --write App.tsx \"{components,contexts,screens,typings}/**/*{.ts,.tsx}\""
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.7.1",
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
