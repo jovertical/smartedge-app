@@ -8,7 +8,9 @@ module.exports = function (api) {
         {
           alias: {
             '@components': './components',
+            '@constants': './constants',
             '@contexts': './contexts',
+            '@helpers': './helpers',
             '@screens': './screens',
           }
         }
