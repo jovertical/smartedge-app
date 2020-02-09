@@ -116,17 +116,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthContext.Provider value={authContext}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           {state.loading ? (
             <Stack.Screen name="Loading" component={LoadingScreen} />
           ) : state.loggedOut ? (
             <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
-                <>
-                  <Stack.Screen name="Home" component={HomeScreen} />
-                  <Stack.Screen name="Profile" component={ProfileScreen} />
-                </>
-              )}
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Profile" component={ProfileScreen} />
+            </>
+          )}
         </Stack.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>

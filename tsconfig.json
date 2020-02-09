@@ -9,6 +9,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
+      "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
       "@constants/*": ["./constants/*"],
       "@contexts/*": ["./contexts/*"],
