@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { AuthContext, LoginProps } from './contexts/AuthContext'
-import LoginScreen from './screens/Auth/Login'
-import LoadingScreen from './screens/Loading'
-import HomeScreen from './screens/Home'
-import ProfileScreen from './screens/Profile'
+import { AuthContext, LoginProps } from '@contexts/AuthContext'
+import LoginScreen from '@screens/Auth/Login'
+import LoadingScreen from '@screens/Loading'
+import HomeScreen from '@screens/Home'
+import ProfileScreen from '@screens/Profile'
 
 type State = {
   loading: boolean

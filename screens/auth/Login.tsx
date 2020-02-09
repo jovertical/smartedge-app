@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { AuthContext } from '../../contexts/AuthContext'
+import { AuthContext } from '@contexts/AuthContext'
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
