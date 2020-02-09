@@ -44,7 +44,6 @@ export default function App() {
         case 'FETCH_USER_FAILED':
           return {
             ...prevState,
-            loggedOut: true,
             loading: false
           }
         case 'LOGIN':
@@ -89,7 +88,9 @@ export default function App() {
     const bootstrap = async () => {
       const authToken = await AsyncStorage.getItem('authToken')
 
-      if (authToken) {
+      if (authToken === null) {
+        dispatch({ type: 'LOGOUT' })
+      } else {
         dispatch({ type: 'FETCH_USER', authToken })
 
         const res = await fetch(API_URL + '/auth/user', {
@@ -109,9 +110,7 @@ export default function App() {
       }
     }
 
-    if (state.loggedOut) {
-      bootstrap()
-    }
+    bootstrap()
   }, [state.loggedOut])
 
   return (
@@ -123,11 +122,11 @@ export default function App() {
           ) : state.loggedOut ? (
             <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Profile" component={ProfileScreen} />
-            </>
-          )}
+                <>
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  <Stack.Screen name="Profile" component={ProfileScreen} />
+                </>
+              )}
         </Stack.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>
