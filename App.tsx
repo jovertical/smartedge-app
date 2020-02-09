@@ -56,7 +56,8 @@ export default function App() {
           return {
             ...prevState,
             loggedOut: true,
-            authToken: undefined
+            authToken: null,
+            user: null
           }
       }
     },
@@ -94,7 +95,7 @@ export default function App() {
         dispatch({ type: 'FETCH_USER', authToken })
 
         const res = await fetch(API_URL + '/auth/user', {
-          method: 'POST',
+          method: 'GET',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -103,7 +104,8 @@ export default function App() {
         })
 
         if (res.status === 200) {
-          dispatch({ type: 'UPDATE_USER', user: null })
+          const user = await res.json()
+          dispatch({ type: 'UPDATE_USER', user })
         } else {
           dispatch({ type: 'FETCH_USER_FAILED' })
         }
@@ -120,13 +122,19 @@ export default function App() {
           {state.loading ? (
             <Stack.Screen name="Loading" component={LoadingScreen} />
           ) : state.loggedOut ? (
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                animationTypeForReplace: state.loggedOut ? 'pop' : 'push'
+              }}
+            />
           ) : (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Profile" component={ProfileScreen} />
-            </>
-          )}
+                <>
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  <Stack.Screen name="Profile" component={ProfileScreen} />
+                </>
+              )}
         </Stack.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>

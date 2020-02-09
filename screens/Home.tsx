@@ -1,13 +1,15 @@
 import * as React from 'react'
 import { View, StyleSheet, Button, Text } from 'react-native'
 import { AuthContext } from '@contexts/AuthContext'
+import { colors } from '@constants/theme'
 
 export default function Home() {
-  const { logout } = React.useContext(AuthContext)
+  const { logout, user } = React.useContext(AuthContext)
+
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Button title="Logout" onPress={() => logout()} />
+      <Text style={{ marginBottom: 5 }}>Hello {user?.name ?? 'Guest'}!</Text>
+      <Button title="Logout" onPress={() => logout()} color={colors.green} />
     </View>
   )
 }
