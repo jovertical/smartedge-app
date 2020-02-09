@@ -24,8 +24,8 @@ type Fields = {
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
-  const [email, setEmail] = React.useState('josh.sisor@gmail.com')
-  const [password, setPassword] = React.useState('smartedge')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
   const [errors, setErrors] = React.useState<Fields>({})
 
   const handleLogin = async () => {
