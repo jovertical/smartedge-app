@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, StyleSheet, Image, ImageBackground } from 'react-native'
+import { View, StyleSheet, Image, ImageBackground, Linking } from 'react-native'
 import Constants from 'expo-constants'
 import omit from 'lodash/omit'
 import logoImage from '@assets/png/logo.png'
@@ -9,6 +9,7 @@ import Text from '@components/Text'
 import TextInput from '@components/TextInput'
 import { AuthContext } from '@contexts/AuthContext'
 import { API_URL } from '@constants/config'
+import { FB_PAGE } from '@constants/links'
 
 type Errors = {
   email?: string[]
@@ -88,7 +89,9 @@ export default function Login() {
           <View style={styles.links}>
             <Text style={styles.link}>Contact Us</Text>
             <Text style={styles.link}>FAQs</Text>
-            <Text style={styles.link}>Facebook Page</Text>
+            <Text style={styles.link} onPress={() => Linking.openURL(FB_PAGE)}>
+              Facebook Page
+            </Text>
           </View>
         </View>
       </ImageBackground>
