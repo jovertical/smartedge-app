@@ -2,7 +2,6 @@ import * as React from 'react'
 import {
   View,
   StyleSheet,
-  Button,
   TextInput,
   Image,
   ImageBackground
@@ -11,6 +10,7 @@ import Constants from 'expo-constants'
 import omit from 'lodash/omit'
 import logoImage from '@assets/png/logo.png'
 import overlayImage from '@assets/png/overlay.png'
+import Button from '@components/Button'
 import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import { API_URL } from '@constants/config'
@@ -100,7 +100,7 @@ export default function Login() {
               </Text>
             )}
             <View style={styles.buttonWrapper}>
-              <Button title="Login" onPress={handleLogin} color="#004C00" />
+              <Button onPress={handleLogin} title="Login" />
             </View>
           </View>
           <View style={styles.links}>

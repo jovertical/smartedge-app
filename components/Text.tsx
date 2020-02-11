@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { StyleSheet, Text, TextProps } from 'react-native'
-import { colors, colorTypes } from '@constants/theme'
+import { colors, ColorTypes } from '@constants/theme'
 
 interface Props extends TextProps {
-  color?: colorTypes
+  color?: ColorTypes
   weight?: 'extrabold' | 'extralight'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   align?: 'left' | 'center' | 'right'
@@ -18,7 +18,7 @@ export default function({
   align = 'left',
   style,
   ...props
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <Text
       style={{
