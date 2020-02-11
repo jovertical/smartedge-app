@@ -10,7 +10,7 @@ interface Props extends TextInputProps {
   style?: StyleSheet.NamedStyles<{}>
 }
 
-export default function ({
+export default function({
   color = 'greenDarker',
   label,
   error,

@@ -11,7 +11,7 @@ interface Props extends TextProps {
   style?: StyleSheet.NamedStyles<{}>
 }
 
-export default function ({
+export default function({
   color = 'greenDarker',
   weight = 'extrabold',
   size = 'md',

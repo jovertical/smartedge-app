@@ -14,7 +14,7 @@ interface Props extends TouchableOpacityProps {
   style?: StyleSheet.NamedStyles<{}>
 }
 
-export default function ({
+export default function({
   title,
   color = 'greenDarker',
   style,
