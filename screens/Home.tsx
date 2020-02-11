@@ -10,6 +10,7 @@ export default function Home() {
 
   return (
     <Master verticalAlign="center" horizontalAlign="right" contentPadding={0}>
+      <Text onPress={logout}>Logout</Text>
       <View style={styles.linkSmall}>
         <Text color="white" style={{ fontSize: 20 }}>
           ANNOUNCEMENTS

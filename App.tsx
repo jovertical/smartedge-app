@@ -6,7 +6,7 @@ import * as Font from 'expo-font'
 import montExtraBold from '@assets/fonts/mont-extrabold.otf'
 import montExtraLight from '@assets/fonts/mont-extralight.otf'
 import { AuthContext } from '@contexts/AuthContext'
-import { API_URL } from '@constants/config'
+import api from '@helpers/api'
 import LoginScreen from '@screens/Auth/Login'
 import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
@@ -84,11 +84,12 @@ export default function App() {
       loggedOut: state.loggedOut,
       user: state.user,
       login: async (authToken: string) => {
-        AsyncStorage.setItem('authToken', authToken)
+        await AsyncStorage.setItem('authToken', authToken)
         dispatch({ type: 'LOGIN', authToken })
       },
-      logout: () => {
-        AsyncStorage.removeItem('authToken')
+      logout: async () => {
+        await api('/auth/logout', { method: 'POST' }, state.authToken)
+        await AsyncStorage.removeItem('authToken')
         dispatch({ type: 'LOGOUT' })
       }
     }),
@@ -97,20 +98,18 @@ export default function App() {
 
   React.useEffect(() => {
     const fetchUser = async (authToken: string) => {
-      const res = await fetch(API_URL + '/auth/user', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`
-        }
-      })
+      try {
+        const res = await api('/auth/user', {}, authToken)
 
-      if (res.status === 200) {
-        const user = await res.json()
-        dispatch({ type: 'FETCH_USER_SUCCESS', user })
-      } else {
-        dispatch({ type: 'FETCH_USER_FAILED' })
+        if (res.status === 200) {
+          const user = await res.json()
+          dispatch({ type: 'FETCH_USER_SUCCESS', user })
+        } else {
+          dispatch({ type: 'FETCH_USER_FAILED' })
+          dispatch({ type: 'LOGOUT' })
+        }
+      } catch (error) {
+        dispatch({ type: 'LOGOUT' })
       }
     }
 

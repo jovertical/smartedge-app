@@ -8,8 +8,8 @@ import Button from '@components/Button'
 import Text from '@components/Text'
 import TextInput from '@components/TextInput'
 import { AuthContext } from '@contexts/AuthContext'
-import { API_URL } from '@constants/config'
 import { FB_PAGE } from '@constants/links'
+import api from '@helpers/api'
 
 type Errors = {
   email?: string[]
@@ -24,29 +24,29 @@ export default function Login() {
   const [errors, setErrors] = React.useState<Errors>({})
 
   const handleLogin = async () => {
-    const res = await fetch(API_URL + '/auth/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        device_name: Constants.deviceId
+    try {
+      const res = await api('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+          device_name: Constants.deviceId
+        })
       })
-    })
 
-    switch (res.status) {
-      case 422:
-        const { errors = {} } = await res.json()
-        setErrors(errors)
-        break
+      switch (res.status) {
+        case 422:
+          const { errors = {} } = await res.json()
+          setErrors(errors)
+          break
 
-      case 200:
-        const authToken = await res.text()
-        login(authToken)
-        break
+        case 200:
+          const authToken = await res.text()
+          login(authToken)
+          break
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
