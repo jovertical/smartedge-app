@@ -23,7 +23,7 @@ export default function({
     <Text
       style={{
         color: colors[color],
-        fontFamily: 'mont-extrabold',
+        fontFamily: `mont-${weight}`,
         fontSize:
           size === 'sm' ? 12 : size === 'lg' ? 18 : size === 'xl' ? 26 : 14,
         textAlign: align,

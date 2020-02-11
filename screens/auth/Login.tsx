@@ -1,32 +1,26 @@
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Image,
-  ImageBackground
-} from 'react-native'
+import { View, StyleSheet, Image, ImageBackground } from 'react-native'
 import Constants from 'expo-constants'
 import omit from 'lodash/omit'
 import logoImage from '@assets/png/logo.png'
 import overlayImage from '@assets/png/overlay.png'
 import Button from '@components/Button'
 import Text from '@components/Text'
+import TextInput from '@components/TextInput'
 import { AuthContext } from '@contexts/AuthContext'
 import { API_URL } from '@constants/config'
-import { colors } from '@constants/theme'
 
-type Fields = {
-  email?: string
-  password?: string
-  device_name?: string
+type Errors = {
+  email?: string[]
+  password?: string[]
+  device_name?: string[]
 }
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [errors, setErrors] = React.useState<Fields>({})
+  const [errors, setErrors] = React.useState<Errors>({})
 
   const handleLogin = async () => {
     const res = await fetch(API_URL + '/auth/login', {
@@ -64,9 +58,6 @@ export default function Login() {
             <Text size="xl" align="center" style={styles.title}>
               Welcome to the Smart Edge App!
             </Text>
-            <Text color="green" style={styles.inputLabel}>
-              Email
-            </Text>
             <TextInput
               textContentType="emailAddress"
               autoCapitalize="none"
@@ -75,14 +66,10 @@ export default function Login() {
                 setErrors(omit(errors, ['email']))
               }}
               value={email}
-              style={[styles.input, errors.email ? styles.hasError : null]}
+              style={styles.input}
+              label="Email"
+              error={errors.email}
             />
-            {errors.email && (
-              <Text color="red" style={styles.inputError}>
-                {errors.email[0]}
-              </Text>
-            )}
-            <Text style={styles.inputLabel}>Password</Text>
             <TextInput
               textContentType="password"
               autoCapitalize="none"
@@ -92,16 +79,11 @@ export default function Login() {
                 setErrors(omit(errors, ['password']))
               }}
               value={password}
-              style={[styles.input, errors.password && styles.hasError]}
+              style={styles.input}
+              label="Password"
+              error={errors.password}
             />
-            {errors.password && (
-              <Text color="red" style={styles.inputError}>
-                {errors.password[0]}
-              </Text>
-            )}
-            <View style={styles.buttonWrapper}>
-              <Button onPress={handleLogin} title="Login" />
-            </View>
+            <Button onPress={handleLogin} title="Login" style={styles.button} />
           </View>
           <View style={styles.links}>
             <Text style={styles.link}>Contact Us</Text>
@@ -138,26 +120,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   input: {
-    width: '50%',
-    height: 40,
-    marginBottom: 5,
-    padding: 10,
-    borderWidth: 1.5,
-    borderRadius: 2,
-    color: colors.green,
-    backgroundColor: '#ffffff'
+    width: '50%'
   },
-  hasError: {
-    borderColor: colors.red,
-    marginBottom: 1
-  },
-  inputLabel: {
-    marginBottom: 3
-  },
-  inputError: {
-    marginBottom: 3
-  },
-  buttonWrapper: {
+  button: {
     width: '50%',
     marginTop: 5
   },
