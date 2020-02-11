@@ -10,8 +10,8 @@ interface Props extends TextInputProps {
   style?: StyleSheet.NamedStyles<{}>
 }
 
-export default function({
-  color = 'green',
+export default function ({
+  color = 'greenDarker',
   label,
   error,
   style,
@@ -20,7 +20,7 @@ export default function({
   return (
     <>
       {label && (
-        <Text color="green" style={styles.label}>
+        <Text color="greenDarker" style={styles.label}>
           {label}
         </Text>
       )}

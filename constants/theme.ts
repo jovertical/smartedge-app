@@ -1,7 +1,13 @@
-export type ColorTypes = 'green' | 'greenLighter' | 'red' | 'white'
+export type ColorTypes =
+  | 'greenDarker'
+  | 'green'
+  | 'greenLighter'
+  | 'red'
+  | 'white'
 
 export const colors = {
-  green: '#004C00',
+  greenDarker: '#004C00',
+  green: '#00960C',
   greenLighter: '#2BD000',
   red: '#FF0000',
   white: '#FFFFFF'
