@@ -1,9 +1,13 @@
 import * as React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { AuthContext } from '@contexts/AuthContext'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import { colors } from '@constants/theme'
+import accountIcon from '@assets/png/icons/account.png'
+import announcementIcon from '@assets/png/icons/announcement.png'
+import uploadIcon from '@assets/png/icons/upload.png'
+import quizIcon from '@assets/png/icons/quiz.png'
 
 export default function Home() {
   const { logout, user } = React.useContext(AuthContext)
@@ -12,29 +16,33 @@ export default function Home() {
     <Master verticalAlign="center" horizontalAlign="right" contentPadding={0}>
       <Text onPress={logout}>Logout</Text>
       <View style={styles.linkSmall}>
-        <Text color="white" style={{ fontSize: 20 }}>
+        <Text color="white" style={styles.linkSmallText}>
           ANNOUNCEMENTS
         </Text>
+        <Image source={announcementIcon} style={styles.smallIcon} />
       </View>
       <View style={styles.linkMedium}>
-        <Text color="white" style={{ fontSize: 30 }}>
+        <Image source={uploadIcon} style={styles.mediumIcon} />
+        <Text color="white" style={styles.linkMediumText}>
           UPLOADS
         </Text>
       </View>
       <View style={styles.linkLarge}>
-        <Text color="white" align="center" style={{ fontSize: 40 }}>
+        <Text color="white" align="center" style={styles.linkLargeText}>
           PROBLEM OF THE DAY!
         </Text>
       </View>
       <View style={styles.linkMedium}>
-        <Text color="white" style={{ fontSize: 30 }}>
+        <Image source={quizIcon} style={styles.mediumIcon} />
+        <Text color="white" style={styles.linkMediumText}>
           TAKE A QUIZ!
         </Text>
       </View>
       <View style={styles.linkSmall}>
-        <Text color="white" style={{ fontSize: 20 }}>
+        <Text color="white" style={styles.linkSmallText}>
           ACCOUNT INFO
         </Text>
+        <Image source={accountIcon} style={styles.smallIcon} />
       </View>
     </Master>
   )
@@ -45,16 +53,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.greenDarker,
     width: '70%',
     height: '12%',
-    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center'
+  },
+  linkSmallText: {
+    fontSize: 20,
   },
   linkMedium: {
     backgroundColor: colors.green,
     width: '80%',
     height: '16%',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'flex-end'
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  linkMediumText: {
+    fontSize: 30
   },
   linkLarge: {
     backgroundColor: colors.greenLightest,
@@ -63,5 +79,18 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  linkLargeText: {
+    fontSize: 40
+  },
+  smallIcon: {
+    width: 40,
+    height: 40,
+    marginLeft: 10
+  },
+  mediumIcon: {
+    width: 60,
+    height: 60,
+    marginRight: 10
   }
 })
