@@ -4,6 +4,7 @@ import {
   ViewProps,
   StyleSheet,
   Image,
+  ImageSourcePropType,
   ImageBackground
 } from 'react-native'
 import logoImage from '@assets/png/logo.png'
@@ -13,6 +14,7 @@ import { colors } from '@constants/theme'
 
 interface Props extends ViewProps {
   title?: string
+  titleIcon?: ImageSourcePropType
   sectionType?: 'TAQ' | 'UPLOADS' | 'ACCOUNT' | 'ANNOUNCEMENTS'
   horizontalAlign?: 'left' | 'center' | 'right'
   verticalAlign?: 'top' | 'center' | 'bottom'
@@ -22,6 +24,7 @@ interface Props extends ViewProps {
 
 export default function Master({
   title,
+  titleIcon,
   horizontalAlign = 'left',
   verticalAlign = 'top',
   contentPadding = 10,
@@ -36,9 +39,12 @@ export default function Master({
           </View>
           {title && (
             <View style={styles.title}>
-              <Text color="white" size="xl">
+              <Text color="white" style={styles.titleText}>
                 {title}
               </Text>
+              {titleIcon && (
+                <Image source={titleIcon} style={styles.titleIcon} />
+              )}
             </View>
           )}
         </View>
@@ -98,8 +104,17 @@ const styles = StyleSheet.create({
     height: '50%',
     paddingHorizontal: 10,
     backgroundColor: colors.greenDarker,
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center'
+  },
+  titleText: {
+    fontSize: 16,
+    marginRight: 5
+  },
+  titleIcon: {
+    width: 35,
+    height: 35
   },
   description: {
     marginBottom: 10,

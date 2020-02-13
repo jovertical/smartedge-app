@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 type Props = {
+  authToken?: string
   loggedOut: boolean
   user?: User
   login?(authToken: string): void

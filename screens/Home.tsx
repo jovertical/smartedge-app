@@ -9,12 +9,11 @@ import announcementIcon from '@assets/png/icons/announcement.png'
 import uploadIcon from '@assets/png/icons/upload.png'
 import quizIcon from '@assets/png/icons/quiz.png'
 
-export default function Home() {
-  const { logout, user } = React.useContext(AuthContext)
+export default function Home({ navigation }) {
+  const { user } = React.useContext(AuthContext)
 
   return (
     <Master verticalAlign="center" horizontalAlign="right" contentPadding={0}>
-      <Text onPress={logout}>Logout</Text>
       <View style={styles.linkSmall}>
         <Text color="white" style={styles.linkSmallText}>
           ANNOUNCEMENTS
@@ -39,7 +38,15 @@ export default function Home() {
         </Text>
       </View>
       <View style={styles.linkSmall}>
-        <Text color="white" style={styles.linkSmallText}>
+        <Text
+          color="white"
+          style={styles.linkSmallText}
+          onPress={() =>
+            user?.type === 'admin'
+              ? navigation.navigate('AdminAccountList')
+              : alert('!')
+          }
+        >
           ACCOUNT INFO
         </Text>
         <Image source={accountIcon} style={styles.smallIcon} />
@@ -58,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   linkSmallText: {
-    fontSize: 20,
+    fontSize: 20
   },
   linkMedium: {
     backgroundColor: colors.green,

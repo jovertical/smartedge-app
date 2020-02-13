@@ -9,6 +9,7 @@ import { colors, ColorTypes } from '@constants/theme'
 
 interface Props extends TouchableOpacityProps {
   title: string
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   color?: ColorTypes
   children?: React.ReactNode
   style?: StyleSheet.NamedStyles<{}>
@@ -16,6 +17,7 @@ interface Props extends TouchableOpacityProps {
 
 export default function({
   title,
+  size = 'md',
   color = 'greenDarker',
   style,
   ...props
@@ -26,7 +28,27 @@ export default function({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors[color],
-        height: 40,
+        borderRadius: 50,
+        height:
+          size === 'sm'
+            ? 30
+            : size === 'md'
+            ? 40
+            : size === 'lg'
+            ? 50
+            : size === 'xl'
+            ? 60
+            : 40,
+        padding:
+          size === 'sm'
+            ? 4
+            : size === 'md'
+            ? 8
+            : size === 'lg'
+            ? 16
+            : size === 'xl'
+            ? 32
+            : 8,
         ...style
       }}
       {...props}

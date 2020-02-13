@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import * as Font from 'expo-font'
+import pick from 'lodash/pick'
 import montExtraBold from '@assets/fonts/mont-extrabold.otf'
 import montExtraLight from '@assets/fonts/mont-extralight.otf'
 import { AuthContext } from '@contexts/AuthContext'
@@ -11,6 +12,7 @@ import LoginScreen from '@screens/Auth/Login'
 import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
 import ProfileScreen from '@screens/Profile'
+import AdminAccountListScreen from '@screens/Admin/AccountList'
 
 type State = {
   fontLoaded: boolean
@@ -81,8 +83,7 @@ export default function App() {
 
   const authContext = React.useMemo(
     () => ({
-      loggedOut: state.loggedOut,
-      user: state.user,
+      ...pick(state, ['authToken', 'loggedOut', 'user']),
       login: async (authToken: string) => {
         await AsyncStorage.setItem('authToken', authToken)
         dispatch({ type: 'LOGIN', authToken })
@@ -157,6 +158,12 @@ export default function App() {
             <>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
+              {state.user?.type === 'admin' && (
+                <Stack.Screen
+                  name="AdminAccountList"
+                  component={AdminAccountListScreen}
+                />
+              )}
             </>
           )}
         </Stack.Navigator>
