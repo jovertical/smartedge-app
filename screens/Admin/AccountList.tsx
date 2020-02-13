@@ -7,13 +7,13 @@ import {
   SafeAreaView,
   FlatList
 } from 'react-native'
+import accountIcon from '@assets/png/icons/account.png'
+import editIcon from '@assets/png/icons/edit.png'
 import Button from '@components/Button'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
-import accountIcon from '@assets/png/icons/account.png'
-import editIcon from '@assets/png/icons/edit.png'
 
 interface ItemProps {
   user: User

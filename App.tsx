@@ -11,8 +11,8 @@ import api from '@helpers/api'
 import LoginScreen from '@screens/Auth/Login'
 import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
-import ProfileScreen from '@screens/Profile'
 import AdminAccountListScreen from '@screens/Admin/AccountList'
+import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
   fontLoaded: boolean
@@ -157,11 +157,15 @@ export default function App() {
           ) : (
             <>
               <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Profile" component={ProfileScreen} />
-              {state.user?.type === 'admin' && (
+              {state.user?.type === 'admin' ? (
                 <Stack.Screen
                   name="AdminAccountList"
                   component={AdminAccountListScreen}
+                />
+              ) : (
+                <Stack.Screen
+                  name="RevieweeAccount"
+                  component={RevieweeAccountScreen}
                 />
               )}
             </>

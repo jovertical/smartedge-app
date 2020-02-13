@@ -4,6 +4,7 @@ export type ColorTypes =
   | 'greenLighter'
   | 'greenLightest'
   | 'red'
+  | 'blue'
   | 'white'
   | 'gray-100'
   | 'gray-200'
@@ -21,6 +22,7 @@ export const colors = {
   greenLighter: '#2BD000',
   greenLightest: '#63C423',
   red: '#FF0000',
+  blue: '#2348BF',
   white: '#FFFFFF',
   'gray-100': '#f5f5f5',
   'gray-200': '#eeeeee',

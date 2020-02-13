@@ -44,7 +44,7 @@ export default function Home({ navigation }) {
           onPress={() =>
             user?.type === 'admin'
               ? navigation.navigate('AdminAccountList')
-              : alert('!')
+              : navigation.navigate('RevieweeAccount')
           }
         >
           ACCOUNT INFO
