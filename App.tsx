@@ -13,6 +13,7 @@ import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
 import AdminAccountsScreen from '@screens/Admin/Accounts'
 import AdminSubjectsScreen from '@screens/Admin/Subjects'
+import AdminSubjectQuestionsScreen from '@screens/Admin/SubjectQuestions'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -163,6 +164,10 @@ export default function App() {
                   <Stack.Screen
                     name="Subjects"
                     component={AdminSubjectsScreen}
+                  />
+                  <Stack.Screen
+                    name="SubjectQuestions"
+                    component={AdminSubjectQuestionsScreen}
                   />
                   <Stack.Screen
                     name="Account"

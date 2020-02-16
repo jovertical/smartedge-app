@@ -12,7 +12,7 @@ interface Props extends TextProps {
 }
 
 export default function({
-  color = 'greenDarker',
+  color = 'gray-900',
   weight = 'extrabold',
   size = 'md',
   align = 'left',

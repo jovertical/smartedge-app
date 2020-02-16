@@ -58,7 +58,7 @@ export default function Master({
             </View>
           )}
         </View>
-        <Text style={styles.description}>
+        <Text color="greenDarker" style={styles.description}>
           "Be the best prepared ECE examinee!"
         </Text>
         <View
