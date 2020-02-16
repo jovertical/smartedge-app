@@ -1,4 +1,5 @@
 declare module '*.otf'
+declare module '*.ttf'
 
 declare module '*.gif'
 declare module '*.jpg'

@@ -4,7 +4,7 @@ import { colors, ColorTypes } from '@constants/theme'
 
 interface Props extends TextProps {
   color?: ColorTypes
-  weight?: 'extrabold' | 'extralight'
+  weight?: 'medium' | 'bold'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   align?: 'left' | 'center' | 'right'
   children?: React.ReactNode
@@ -13,7 +13,7 @@ interface Props extends TextProps {
 
 export default function({
   color = 'gray-900',
-  weight = 'extrabold',
+  weight = 'medium',
   size = 'md',
   align = 'left',
   style,
@@ -23,7 +23,7 @@ export default function({
     <Text
       style={{
         color: colors[color],
-        fontFamily: `mont-${weight}`,
+        fontFamily: `roboto-${weight}`,
         fontSize:
           size === 'sm' ? 12 : size === 'lg' ? 18 : size === 'xl' ? 26 : 14,
         textAlign: align,

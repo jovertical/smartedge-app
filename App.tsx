@@ -4,8 +4,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import * as Font from 'expo-font'
 import pick from 'lodash/pick'
-import montExtraBold from '@assets/fonts/mont-extrabold.otf'
-import montExtraLight from '@assets/fonts/mont-extralight.otf'
+import RobotoMedium from '@assets/fonts/Roboto-Medium.ttf'
+import RobotoBold from '@assets/fonts/Roboto-Bold.ttf'
+
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 import LoginScreen from '@screens/Auth/Login'
@@ -134,8 +135,8 @@ export default function App() {
   React.useEffect(() => {
     const bootstrap = async () => {
       await Font.loadAsync({
-        'mont-extrabold': montExtraBold,
-        'mont-extralight': montExtraLight
+        'roboto-medium': RobotoMedium,
+        'roboto-bold': RobotoBold
       })
 
       dispatch({ type: 'SET_FONT_LOADED' })

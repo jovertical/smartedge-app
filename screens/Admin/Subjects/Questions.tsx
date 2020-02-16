@@ -8,7 +8,7 @@ import {
   FlatList
 } from 'react-native'
 import quizIcon from '@assets/png/icons/quiz.png'
-import editIcon from '@assets/png/icons/edit.png'
+import editIcon from '@assets/png/icons/edit-black.png'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
