@@ -15,26 +15,26 @@ import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 
 interface ItemProps {
-  subject: Subject
+  index: number
+  answer: Answer
   navigation: any
 }
 
-const Item: React.FC<ItemProps> = ({ subject, navigation }) => {
+const Item: React.FC<ItemProps> = ({ index, answer, navigation }) => {
   return (
-    <View key={subject.id} style={styles.listItem}>
-      <TouchableOpacity
-        style={styles.listItemContent}
-        onPress={() =>
-          navigation.navigate('SubjectQuestions', { id: subject.id })
-        }
-      >
-        <Text size="lg" color="gray-900">
-          {subject?.name}
+    <View key={answer.id} style={styles.listItem}>
+      <TouchableOpacity style={styles.listItemContent}>
+        <Text size="lg" color={answer.correct ? 'red' : 'gray-900'}>
+          {`${String.fromCharCode(97 + index).toUpperCase()}. ${answer?.body}`}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.editButton}
-        onPress={() => navigation.navigate('SubjectEdit', { id: subject.id })}
+        onPress={() =>
+          navigation.navigate('AnswerEdit', {
+            id: answer.id
+          })
+        }
       >
         <Image source={editIcon} style={styles.editIcon} />
       </TouchableOpacity>
@@ -42,42 +42,45 @@ const Item: React.FC<ItemProps> = ({ subject, navigation }) => {
   )
 }
 
-export default function List({ navigation, route }) {
+export default function Answers({ navigation, route }) {
+  const questionId = route.params?.id
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
-  const [subjects, setSubjects] = React.useState<Subject[]>([])
+  const [question, setQuestion] = React.useState<Question>(null)
 
   React.useEffect(() => {
-    const fetchSubjects = async () => {
-      const res = await api('/subjects', {}, authToken)
+    const fetchAnswers = async () => {
+      const res = await api(`/questions/${questionId}`, {}, authToken)
 
       if (res.status === 200) {
-        const newSubjects = await res.json()
-        setSubjects(newSubjects)
+        setQuestion(await res.json())
       }
 
       setLoading(false)
     }
 
-    fetchSubjects()
+    fetchAnswers()
   }, [route.params])
 
   return (
     <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
       {loading ? (
-        <Text>Fetching subjects...</Text>
+        <Text>Fetching answers...</Text>
       ) : (
         <>
           <View style={styles.details}>
-            <Text color="blue">SELECT QUIZ SUBJECT:</Text>
+            <Text size="lg" color="blue">
+              QUESTION:
+            </Text>
+            <Text size="lg">{question.body}</Text>
           </View>
           <SafeAreaView style={styles.listContainer}>
             <FlatList
-              data={subjects}
-              renderItem={({ item }) => (
-                <Item subject={item} navigation={navigation} />
+              data={question.answers}
+              renderItem={({ item, ...props }) => (
+                <Item answer={item} navigation={navigation} {...props} />
               )}
-              keyExtractor={subject => subject.id.toString()}
+              keyExtractor={answer => answer.id.toString()}
             />
           </SafeAreaView>
         </>
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     padding: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between'
   },
   listItemContent: {

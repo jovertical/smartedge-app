@@ -15,19 +15,22 @@ import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 
 interface ItemProps {
+  index: number
   question: Question
   navigation: any
 }
 
-const Item: React.FC<ItemProps> = ({ question, navigation }) => {
+const Item: React.FC<ItemProps> = ({ index, question, navigation }) => {
   return (
     <View key={question.id} style={styles.listItem}>
       <TouchableOpacity
         style={styles.listItemContent}
-        onPress={() => navigation.navigate('SubjectQuestions', question.id)}
+        onPress={() =>
+          navigation.navigate('QuestionAnswers', { id: question.id })
+        }
       >
         <Text size="lg" color="gray-900">
-          {question?.body}
+          {`${index + 1}. ${question.body}`}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -41,23 +44,23 @@ const Item: React.FC<ItemProps> = ({ question, navigation }) => {
 }
 
 export default function Questions({ navigation, route }) {
-  const subject: Subject = route.params?.subject
+  const subjectId = route.params?.id
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
-  const [questions, setQuestions] = React.useState<Question[]>([])
+  const [subject, setSubject] = React.useState<Subject>(null)
 
   React.useEffect(() => {
-    const fetchQuestions = async () => {
-      const res = await api(`/subjects/${subject?.id}/questions`, {}, authToken)
+    const fetchSubject = async () => {
+      const res = await api(`/subjects/${subjectId}`, {}, authToken)
 
       if (res.status === 200) {
-        setQuestions(await res.json())
+        setSubject(await res.json())
       }
 
       setLoading(false)
     }
 
-    fetchQuestions()
+    fetchSubject()
   }, [route.params])
 
   return (
@@ -71,9 +74,9 @@ export default function Questions({ navigation, route }) {
           </View>
           <SafeAreaView style={styles.listContainer}>
             <FlatList
-              data={questions}
-              renderItem={({ item }) => (
-                <Item question={item} navigation={navigation} />
+              data={subject.questions}
+              renderItem={({ item, index }) => (
+                <Item index={index} question={item} navigation={navigation} />
               )}
               keyExtractor={question => question.id.toString()}
             />
