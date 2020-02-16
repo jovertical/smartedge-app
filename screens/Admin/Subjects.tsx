@@ -7,27 +7,23 @@ import {
   SafeAreaView,
   FlatList
 } from 'react-native'
-import accountIcon from '@assets/png/icons/account.png'
+import quizIcon from '@assets/png/icons/quiz.png'
 import editIcon from '@assets/png/icons/edit.png'
-import Button from '@components/Button'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 
 interface ItemProps {
-  user: User
+  subject: Subject
 }
 
-const Item: React.FC<ItemProps> = ({ user }) => {
+const Item: React.FC<ItemProps> = ({ subject }) => {
   return (
-    <View key={user.id} style={styles.userCard}>
-      <View>
+    <View key={subject.id} style={styles.listItem}>
+      <View style={styles.listItemContent}>
         <Text size="lg" color="gray-900">
-          NAME: {user?.name.toUpperCase()}
-        </Text>
-        <Text size="lg" color="gray-900">
-          REVIEWEE NO: {user?.reviewee_profile?.reviewee_number}
+          {subject?.name.toUpperCase()}
         </Text>
       </View>
       <TouchableOpacity style={styles.editButton}>
@@ -37,42 +33,39 @@ const Item: React.FC<ItemProps> = ({ user }) => {
   )
 }
 
-export default function AccountList() {
-  const { authToken, logout } = React.useContext(AuthContext)
+export default function Subjects() {
+  const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
-  const [users, setUsers] = React.useState<User[]>([])
+  const [subjects, setSubjects] = React.useState<Subject[]>([])
 
   React.useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await api('/users?type=reviewee', {}, authToken)
+    const fetchSubjects = async () => {
+      const res = await api('/subjects', {}, authToken)
 
       if (res.status === 200) {
-        const newUsers = await res.json()
-        setUsers(newUsers)
+        const newSubjects = await res.json()
+        setSubjects(newSubjects)
       }
 
       setLoading(false)
     }
 
-    fetchUsers()
+    fetchSubjects()
   }, [])
 
   return (
-    <Master title="ACCOUNT INFO" titleIcon={accountIcon}>
+    <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
       {loading ? (
-        <Text>Fetching reviewees...</Text>
+        <Text>Fetching subjects...</Text>
       ) : (
         <SafeAreaView style={styles.listContainer}>
           <FlatList
-            data={users}
-            renderItem={({ item }) => <Item user={item} />}
-            keyExtractor={user => user.id.toString()}
+            data={subjects}
+            renderItem={({ item }) => <Item subject={item} />}
+            keyExtractor={subject => subject.id.toString()}
           />
         </SafeAreaView>
       )}
-      <View style={styles.bottomBar}>
-        <Button title="LOGOUT" size="lg" onPress={logout} />
-      </View>
     </Master>
   )
 }
@@ -81,7 +74,7 @@ const styles = StyleSheet.create({
   listContainer: {
     maxHeight: '80%'
   },
-  userCard: {
+  listItem: {
     width: '100%',
     backgroundColor: 'rgba(52, 52, 52, 0.4)',
     marginBottom: 5,
@@ -89,6 +82,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  listItemContent: {
+    width: '90%'
   },
   editButton: {},
   editIcon: {

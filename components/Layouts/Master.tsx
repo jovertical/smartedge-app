@@ -15,6 +15,7 @@ import { colors } from '@constants/theme'
 interface Props extends ViewProps {
   title?: string
   titleIcon?: ImageSourcePropType
+  titleIconPlacement?: 'right' | 'left'
   sectionType?: 'TAQ' | 'UPLOADS' | 'ACCOUNT' | 'ANNOUNCEMENTS'
   horizontalAlign?: 'left' | 'center' | 'right'
   verticalAlign?: 'top' | 'center' | 'bottom'
@@ -25,6 +26,7 @@ interface Props extends ViewProps {
 export default function Master({
   title,
   titleIcon,
+  titleIconPlacement = 'right',
   horizontalAlign = 'left',
   verticalAlign = 'top',
   contentPadding = 10,
@@ -38,7 +40,15 @@ export default function Master({
             <Image source={logoImage} style={styles.logo} />
           </View>
           {title && (
-            <View style={styles.title}>
+            <View
+              style={[
+                styles.title,
+                {
+                  flexDirection:
+                    titleIconPlacement === 'right' ? 'row' : 'row-reverse'
+                }
+              ]}
+            >
               <Text color="white" style={styles.titleText}>
                 {title}
               </Text>
@@ -110,7 +120,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 16,
-    marginRight: 5
+    marginHorizontal: 5
   },
   titleIcon: {
     width: 35,

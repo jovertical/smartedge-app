@@ -11,7 +11,8 @@ import api from '@helpers/api'
 import LoginScreen from '@screens/Auth/Login'
 import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
-import AdminAccountListScreen from '@screens/Admin/AccountList'
+import AdminAccountsScreen from '@screens/Admin/Accounts'
+import AdminSubjectsScreen from '@screens/Admin/Subjects'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -158,13 +159,19 @@ export default function App() {
             <>
               <Stack.Screen name="Home" component={HomeScreen} />
               {state.user?.type === 'admin' ? (
-                <Stack.Screen
-                  name="AdminAccountList"
-                  component={AdminAccountListScreen}
-                />
+                <>
+                  <Stack.Screen
+                    name="Subjects"
+                    component={AdminSubjectsScreen}
+                  />
+                  <Stack.Screen
+                    name="Account"
+                    component={AdminAccountsScreen}
+                  />
+                </>
               ) : (
                 <Stack.Screen
-                  name="RevieweeAccount"
+                  name="Account"
                   component={RevieweeAccountScreen}
                 />
               )}

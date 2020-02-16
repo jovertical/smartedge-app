@@ -9,6 +9,17 @@ import announcementIcon from '@assets/png/icons/announcement.png'
 import uploadIcon from '@assets/png/icons/upload.png'
 import quizIcon from '@assets/png/icons/quiz.png'
 
+const destinations = {
+  admin: {
+    quiz: 'Subjects',
+    accountInfo: 'Account'
+  },
+  reviewee: {
+    quiz: 'Subjects',
+    accountInfo: 'Account'
+  }
+}
+
 export default function Home({ navigation }) {
   const { user } = React.useContext(AuthContext)
 
@@ -33,7 +44,11 @@ export default function Home({ navigation }) {
       </View>
       <View style={styles.linkMedium}>
         <Image source={quizIcon} style={styles.mediumIcon} />
-        <Text color="white" style={styles.linkMediumText}>
+        <Text
+          color="white"
+          style={styles.linkMediumText}
+          onPress={() => navigation.navigate(destinations[user?.type].quiz)}
+        >
           TAKE A QUIZ!
         </Text>
       </View>
@@ -42,9 +57,7 @@ export default function Home({ navigation }) {
           color="white"
           style={styles.linkSmallText}
           onPress={() =>
-            user?.type === 'admin'
-              ? navigation.navigate('AdminAccountList')
-              : navigation.navigate('RevieweeAccount')
+            navigation.navigate(destinations[user?.type].accountInfo)
           }
         >
           ACCOUNT INFO

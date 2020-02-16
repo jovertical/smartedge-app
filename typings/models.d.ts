@@ -18,3 +18,21 @@ interface RevieweeProfile extends Model {
   enrolled_for: String
   expired_at?: String
 }
+
+interface Subject extends Model {
+  name: String
+  body?: String
+  questions?: Question[]
+}
+
+interface Question extends Model {
+  subject_id: Number
+  body: String
+  answers?: Answer[]
+}
+
+interface Answer extends Model {
+  question_id: Number
+  body: String
+  correct: Boolean
+}
