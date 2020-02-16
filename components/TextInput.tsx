@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { View, StyleSheet, TextInput, TextInputProps } from 'react-native'
 import Text from '@components/Text'
 import { colors, ColorTypes } from '@constants/theme'
 
@@ -12,8 +12,8 @@ interface Props extends TextInputProps {
 
 export default function({
   color = 'greenDarker',
-  label,
   error,
+  label,
   style,
   ...props
 }: Props): React.ReactElement {
@@ -44,9 +44,6 @@ export default function({
 
 const styles = StyleSheet.create({
   input: {
-    width: 'auto',
-    height: 40,
-    marginBottom: 5,
     padding: 10,
     borderWidth: 1.5,
     borderRadius: 2,

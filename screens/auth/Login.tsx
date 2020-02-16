@@ -19,8 +19,8 @@ type Errors = {
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState('josh.sisor@gmail.com')
+  const [password, setPassword] = React.useState('smartedge')
   const [errors, setErrors] = React.useState<Errors>({})
 
   const handleLogin = async () => {
@@ -56,7 +56,12 @@ export default function Login() {
         <View style={styles.content}>
           <View style={styles.form}>
             <Image source={logoImage} style={styles.logo} />
-            <Text size="xl" align="center" style={styles.title}>
+            <Text
+              color="greenDarker"
+              size="xl"
+              align="center"
+              style={styles.title}
+            >
               Welcome to the Smart Edge App!
             </Text>
             <TextInput
@@ -87,9 +92,17 @@ export default function Login() {
             <Button onPress={handleLogin} title="Login" style={styles.button} />
           </View>
           <View style={styles.links}>
-            <Text style={styles.link}>Contact Us</Text>
-            <Text style={styles.link}>FAQs</Text>
-            <Text style={styles.link} onPress={() => Linking.openURL(FB_PAGE)}>
+            <Text color="greenDarker" style={styles.link}>
+              Contact Us
+            </Text>
+            <Text color="greenDarker" style={styles.link}>
+              FAQs
+            </Text>
+            <Text
+              color="greenDarker"
+              style={styles.link}
+              onPress={() => Linking.openURL(FB_PAGE)}
+            >
               Facebook Page
             </Text>
           </View>

@@ -30,14 +30,17 @@ const Item: React.FC<ItemProps> = ({ subject, navigation }) => {
           {subject?.name}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.editButton}>
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => navigation.navigate('SubjectEdit', { id: subject.id })}
+      >
         <Image source={editIcon} style={styles.editIcon} />
       </TouchableOpacity>
     </View>
   )
 }
 
-export default function Subjects({ navigation }) {
+export default function List({ navigation, route }) {
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [subjects, setSubjects] = React.useState<Subject[]>([])
@@ -55,7 +58,7 @@ export default function Subjects({ navigation }) {
     }
 
     fetchSubjects()
-  }, [])
+  }, [route.params])
 
   return (
     <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">

@@ -12,8 +12,9 @@ import LoginScreen from '@screens/Auth/Login'
 import LoadingScreen from '@screens/Loading'
 import HomeScreen from '@screens/Home'
 import AdminAccountsScreen from '@screens/Admin/Accounts'
-import AdminSubjectsScreen from '@screens/Admin/Subjects'
-import AdminSubjectQuestionsScreen from '@screens/Admin/SubjectQuestions'
+import AdminSubjectListScreen from '@screens/Admin/Subjects/List'
+import AdminSubjectEditScreen from '@screens/Admin/Subjects/Edit'
+import AdminSubjectQuestionsScreen from '@screens/Admin/Subjects/Questions'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -26,7 +27,7 @@ type State = {
 
 type Action =
   | { type: 'SET_FONT_LOADED' }
-  | { type: 'FETCH_USER_SUCCESS'; user: User }
+  | { type: 'FETCH_USER_SUCCESS'; authToken: string; user: User }
   | { type: 'FETCH_USER_FAILED' }
   | { type: 'LOGIN'; authToken: string }
   | { type: 'LOGOUT' }
@@ -55,6 +56,7 @@ export default function App() {
           return {
             ...prevState,
             loading: false,
+            authToken: action.authToken,
             user: action.user
           }
         case 'LOGIN':
@@ -106,7 +108,7 @@ export default function App() {
 
         if (res.status === 200) {
           const user = await res.json()
-          dispatch({ type: 'FETCH_USER_SUCCESS', user })
+          dispatch({ type: 'FETCH_USER_SUCCESS', authToken, user })
         } else {
           dispatch({ type: 'FETCH_USER_FAILED' })
           dispatch({ type: 'LOGOUT' })
@@ -162,8 +164,12 @@ export default function App() {
               {state.user?.type === 'admin' ? (
                 <>
                   <Stack.Screen
-                    name="Subjects"
-                    component={AdminSubjectsScreen}
+                    name="SubjectList"
+                    component={AdminSubjectListScreen}
+                  />
+                  <Stack.Screen
+                    name="SubjectEdit"
+                    component={AdminSubjectEditScreen}
                   />
                   <Stack.Screen
                     name="SubjectQuestions"

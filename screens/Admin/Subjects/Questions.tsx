@@ -37,7 +37,7 @@ const Item: React.FC<ItemProps> = ({ question, navigation }) => {
   )
 }
 
-export default function SubjectQuestions({ navigation, route }) {
+export default function Questions({ navigation, route }) {
   const subject: Subject = route.params?.subject
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)

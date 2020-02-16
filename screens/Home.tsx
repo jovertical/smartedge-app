@@ -11,11 +11,11 @@ import quizIcon from '@assets/png/icons/quiz.png'
 
 const destinations = {
   admin: {
-    quiz: 'Subjects',
+    quiz: 'SubjectList',
     accountInfo: 'Account'
   },
   reviewee: {
-    quiz: 'Subjects',
+    quiz: 'SubjectList',
     accountInfo: 'Account'
   }
 }

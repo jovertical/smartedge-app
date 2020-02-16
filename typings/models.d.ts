@@ -1,38 +1,38 @@
 interface Model {
   id: number
-  created_at: String
-  updated_at: String
-  deleted_at?: String
+  created_at: string
+  updated_at: string
+  deleted_at?: string
 }
 
 interface User extends Model {
   type: 'reviewee' | 'admin'
-  name: String
-  email: String
+  name: string
+  email: string
   reviewee_profile: RevieweeProfile
 }
 
 interface RevieweeProfile extends Model {
   user_id: Number
-  reviewee_number: String
-  enrolled_for: String
-  expired_at?: String
+  reviewee_number: string
+  enrolled_for: string
+  expired_at?: string
 }
 
 interface Subject extends Model {
-  name: String
-  body?: String
+  name: string
+  body?: string
   questions?: Question[]
 }
 
 interface Question extends Model {
   subject_id: Number
-  body: String
+  body: string
   answers?: Answer[]
 }
 
 interface Answer extends Model {
   question_id: Number
-  body: String
+  body: string
   correct: Boolean
 }
