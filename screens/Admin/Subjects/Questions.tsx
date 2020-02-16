@@ -30,7 +30,10 @@ const Item: React.FC<ItemProps> = ({ question, navigation }) => {
           {question?.body}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.editButton}>
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => navigation.navigate('QuestionEdit', { id: question.id })}
+      >
         <Image source={editIcon} style={styles.editIcon} />
       </TouchableOpacity>
     </View>
@@ -55,7 +58,7 @@ export default function Questions({ navigation, route }) {
     }
 
     fetchQuestions()
-  }, [])
+  }, [route.params])
 
   return (
     <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
@@ -63,10 +66,8 @@ export default function Questions({ navigation, route }) {
         <Text>Fetching questions...</Text>
       ) : (
         <>
-          <View style={styles.subjectDetails}>
-            <Text align="center" size="lg">
-              {subject?.name.toUpperCase()}
-            </Text>
+          <View style={styles.details}>
+            <Text color="blue">LIST OF QUESTIONS:</Text>
           </View>
           <SafeAreaView style={styles.listContainer}>
             <FlatList
@@ -84,10 +85,11 @@ export default function Questions({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  subjectDetails: {
+  details: {
     width: '100%',
-    alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   listContainer: {
     maxHeight: '80%'

@@ -16,6 +16,7 @@ import AdminAccountsScreen from '@screens/Admin/Accounts'
 import AdminSubjectListScreen from '@screens/Admin/Subjects/List'
 import AdminSubjectEditScreen from '@screens/Admin/Subjects/Edit'
 import AdminSubjectQuestionsScreen from '@screens/Admin/Subjects/Questions'
+import AdminQuestionEditScreen from '@screens/Admin/Questions/Edit'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -175,6 +176,10 @@ export default function App() {
                   <Stack.Screen
                     name="SubjectQuestions"
                     component={AdminSubjectQuestionsScreen}
+                  />
+                  <Stack.Screen
+                    name="QuestionEdit"
+                    component={AdminQuestionEditScreen}
                   />
                   <Stack.Screen
                     name="Account"
