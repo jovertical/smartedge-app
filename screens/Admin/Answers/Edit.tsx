@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, CheckBox, View } from 'react-native'
 import omit from 'lodash/omit'
 import quizIcon from '@assets/png/icons/quiz.png'
 import Button from '@components/Button'
@@ -86,6 +86,14 @@ export default function Edit({ navigation, route }) {
             error={errors.body}
           />
 
+          <View style={styles.checkbox}>
+            <CheckBox
+              value={correct}
+              onValueChange={() => setCorrect(!correct)}
+            />
+            <Text>Correct Answer</Text>
+          </View>
+
           <Button title="Update" style={styles.button} onPress={handleSubmit} />
         </>
       )}
@@ -97,6 +105,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     marginBottom: 10
+  },
+  checkbox: {
+    width: '100%',
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   button: {
     width: '100%'
