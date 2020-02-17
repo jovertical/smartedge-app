@@ -19,6 +19,10 @@ import AdminSubjectQuestionsScreen from '@screens/Admin/Subjects/Questions'
 import AdminQuestionEditScreen from '@screens/Admin/Questions/Edit'
 import AdminQuestionAnswersScreen from '@screens/Admin/Questions/Answers'
 import AdminAnswerEditScreen from '@screens/Admin/Answers/Edit'
+import RevieweeQuizSubjectScreen from '@screens/Reviewee/Quiz/Subject'
+import RevieweeQuizTimeModeScreen from '@screens/Reviewee/Quiz/TimeMode'
+import RevieweeQuizQuestionCountScreen from '@screens/Reviewee/Quiz/QuestionCount'
+import RevieweeQuizCheckingModeScreen from '@screens/Reviewee/Quiz/CheckingMode'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -197,10 +201,28 @@ export default function App() {
                   />
                 </>
               ) : (
-                <Stack.Screen
-                  name="Account"
-                  component={RevieweeAccountScreen}
-                />
+                <>
+                  <Stack.Screen
+                    name="SubjectList"
+                    component={RevieweeQuizSubjectScreen}
+                  />
+                  <Stack.Screen
+                    name="TimeMode"
+                    component={RevieweeQuizTimeModeScreen}
+                  />
+                  <Stack.Screen
+                    name="QuestionCount"
+                    component={RevieweeQuizQuestionCountScreen}
+                  />
+                  <Stack.Screen
+                    name="CheckingMode"
+                    component={RevieweeQuizCheckingModeScreen}
+                  />
+                  <Stack.Screen
+                    name="Account"
+                    component={RevieweeAccountScreen}
+                  />
+                </>
               )}
             </>
           )}
