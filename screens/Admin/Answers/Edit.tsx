@@ -57,9 +57,9 @@ export default function Edit({ navigation, route }) {
     const fetchAnswer = async () => {
       const res = await api(`/answers/${answerId}`, {}, authToken)
       if (res.status === 200) {
-        const data = await res.json()
-        setBody(data?.body)
-        setCorrect(data?.correct)
+        const answer = await res.json()
+        setBody(answer?.body)
+        setCorrect(answer.correct)
         setLoading(false)
       }
     }

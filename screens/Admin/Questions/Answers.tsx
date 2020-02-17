@@ -47,19 +47,30 @@ export default function Answers({ navigation, route }) {
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [question, setQuestion] = React.useState<Question>(null)
+  const [answers, setAnswers] = React.useState<Answer[]>([])
 
   React.useEffect(() => {
-    const fetchAnswers = async () => {
-      const res = await api(`/questions/${questionId}`, {}, authToken)
+    const fetchData = async () => {
+      const questionRes = await api(`/questions/${questionId}`, {}, authToken)
 
-      if (res.status === 200) {
-        setQuestion(await res.json())
+      if (questionRes.status === 200) {
+        setQuestion(await questionRes.json())
+      }
+
+      const answersRes = await api(
+        `/questions/${questionId}/answers`,
+        {},
+        authToken
+      )
+
+      if (answersRes.status === 200) {
+        setAnswers(await answersRes.json())
       }
 
       setLoading(false)
     }
 
-    fetchAnswers()
+    fetchData()
   }, [route.params])
 
   return (
@@ -76,7 +87,7 @@ export default function Answers({ navigation, route }) {
           </View>
           <SafeAreaView style={styles.listContainer}>
             <FlatList
-              data={question.answers}
+              data={answers}
               renderItem={({ item, ...props }) => (
                 <Item answer={item} navigation={navigation} {...props} />
               )}
