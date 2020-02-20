@@ -6,8 +6,10 @@ import Text from '@components/Text'
 import Button from '@components/Button'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
+import useDisableBack from '@hooks/useDisableBack'
 
 export default function QuestionCount({ navigation }) {
+  useDisableBack()
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [questionCounters, setQuestionCounters] = React.useState<Number[]>([])

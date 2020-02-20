@@ -12,6 +12,7 @@ module.exports = function (api) {
             '@constants': './constants',
             '@contexts': './contexts',
             '@helpers': './helpers',
+            '@hooks': './hooks',
             '@screens': './screens',
           }
         }

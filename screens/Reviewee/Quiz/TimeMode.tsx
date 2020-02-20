@@ -4,8 +4,10 @@ import quizIcon from '@assets/png/icons/quiz.png'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import Button from '@components/Button'
+import useDisableBack from '@hooks/useDisableBack'
 
 export default function TimeMode({ navigation }) {
+  useDisableBack()
   const [timeMode, setTimeMode] = React.useState('')
 
   const handleNext = async () => {

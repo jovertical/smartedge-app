@@ -6,8 +6,10 @@ import Text from '@components/Text'
 import Button from '@components/Button'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
+import useDisableBack from '@hooks/useDisableBack'
 
 export default function CheckingMode({ navigation }) {
+  useDisableBack()
   const { authToken } = React.useContext(AuthContext)
   const [checkingMode, setTimeMode] = React.useState('')
 

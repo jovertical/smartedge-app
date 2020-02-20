@@ -13,6 +13,7 @@ import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 import Button from '@components/Button'
+import useDisableBack from '@hooks/useDisableBack'
 
 interface ItemProps {
   subjectId: Number
@@ -41,6 +42,7 @@ const Item: React.FC<ItemProps> = ({ subjectId, subject, handleItemPress }) => {
 }
 
 export default function Subject({ navigation }) {
+  useDisableBack()
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [subjects, setSubjects] = React.useState<Subject[]>([])

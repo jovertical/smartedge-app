@@ -14,6 +14,7 @@
       "@constants/*": ["./constants/*"],
       "@contexts/*": ["./contexts/*"],
       "@helpers/*": ["./helpers/*"],
+      "@hooks/*": ["./hooks/*"],
       "@screens/*": ["./screens/*"]
     }
   }
