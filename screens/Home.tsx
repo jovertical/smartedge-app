@@ -9,17 +9,6 @@ import announcementIcon from '@assets/png/icons/announcement.png'
 import uploadIcon from '@assets/png/icons/upload.png'
 import quizIcon from '@assets/png/icons/quiz.png'
 
-const destinations = {
-  admin: {
-    quiz: 'SubjectList',
-    accountInfo: 'Account'
-  },
-  reviewee: {
-    quiz: 'SubjectList',
-    accountInfo: 'Account'
-  }
-}
-
 export default function Home({ navigation }) {
   const { user } = React.useContext(AuthContext)
 
@@ -47,7 +36,17 @@ export default function Home({ navigation }) {
         <Text
           color="white"
           style={styles.linkMediumText}
-          onPress={() => navigation.navigate(destinations[user?.type].quiz)}
+          onPress={() => {
+            if (user?.type === 'admin') {
+              navigation.navigate('SubjectList')
+            } else {
+              if (user?.quizzes.filter(q => !q.completed_at).length > 0) {
+                navigation.navigate('Question')
+              } else {
+                navigation.navigate('SubjectList')
+              }
+            }
+          }}
         >
           TAKE A QUIZ!
         </Text>
@@ -56,9 +55,7 @@ export default function Home({ navigation }) {
         <Text
           color="white"
           style={styles.linkSmallText}
-          onPress={() =>
-            navigation.navigate(destinations[user?.type].accountInfo)
-          }
+          onPress={() => navigation.navigate('Account')}
         >
           ACCOUNT INFO
         </Text>

@@ -9,7 +9,8 @@ interface User extends Model {
   type: 'reviewee' | 'admin'
   name: string
   email: string
-  reviewee_profile: RevieweeProfile
+  reviewee_profile?: RevieweeProfile
+  quizzes?: Quiz[]
 }
 
 interface RevieweeProfile extends Model {
@@ -46,7 +47,7 @@ interface Quiz extends Model {
   completed_at?: string
   user: User
   subject: Subject
-  questuons: QuizQuestion[]
+  questions: QuizQuestion[]
   answers: QuizAnswer[]
 }
 
