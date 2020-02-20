@@ -72,16 +72,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   listContainer: {
-    alignItems: 'center',
     width: '100%'
   },
   listItem: {
-    width: '100%',
     marginBottom: 5,
     padding: 10
   },
   nextButton: {
+    width: 120,
     marginTop: 20,
-    width: 120
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 })

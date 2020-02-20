@@ -3,7 +3,7 @@ import { API_URL } from '@constants/config'
 
 export default (
   path: string,
-  init: RequestInit,
+  init?: RequestInit,
   authToken?: string
 ): Promise<Response> => {
   const { headers, ...config } = init

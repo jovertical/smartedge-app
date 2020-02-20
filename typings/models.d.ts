@@ -54,9 +54,11 @@ interface Quiz extends Model {
 interface QuizQuestion extends Model {
   quiz_id: number
   question_id: number
+  number: number
 }
 
 interface QuizAnswer extends Model {
   quiz_id: number
+  question_id: number
   answer_id: number
 }

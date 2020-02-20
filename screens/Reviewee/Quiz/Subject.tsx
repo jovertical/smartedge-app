@@ -97,13 +97,13 @@ export default function Subject({ navigation }) {
               )}
               keyExtractor={subject => subject.id.toString()}
             />
+            <Button
+              size="lg"
+              title="Next"
+              onPress={handleNext}
+              style={styles.nextButton}
+            />
           </SafeAreaView>
-          <Button
-            size="lg"
-            title="Next"
-            onPress={handleNext}
-            style={{ ...styles.nextButton, bottom: subjects.length * 40 }}
-          />
         </>
       )}
     </Master>
@@ -118,18 +118,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   listContainer: {
-    alignItems: 'center'
+    width: '100%'
   },
   listItem: {
-    width: '100%',
-    height: 70,
+    minHeight: 70,
     marginBottom: 5,
     padding: 10,
     justifyContent: 'center'
   },
   nextButton: {
+    width: 120,
+    marginTop: 20,
     marginLeft: 'auto',
-    marginRight: 'auto',
-    width: 120
+    marginRight: 'auto'
   }
 })
