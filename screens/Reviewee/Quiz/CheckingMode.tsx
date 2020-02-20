@@ -4,16 +4,57 @@ import quizIcon from '@assets/png/icons/quiz.png'
 import Master from '@components/Layouts/Master'
 import Text from '@components/Text'
 import Button from '@components/Button'
+import { AuthContext } from '@contexts/AuthContext'
+import api from '@helpers/api'
 
 export default function CheckingMode({ navigation }) {
+  const { authToken } = React.useContext(AuthContext)
   const [checkingMode, setTimeMode] = React.useState('')
 
   const handleStart = async () => {
     if (!checkingMode) {
       alert('Please select a Checking Mode!')
     } else {
-      await AsyncStorage.setItem('QUIZ_CHECKING_MODE', checkingMode)
-      alert('Lets go!')
+      try {
+        const subjectId = await AsyncStorage.getItem('QUIZ_SUBJECT')
+        const timeMode = await AsyncStorage.getItem('QUIZ_TIME_MODE')
+        const questionCount = await AsyncStorage.getItem('QUIZ_QUESTION_COUNT')
+
+        const res = await api(
+          `/subjects/${subjectId}/quizzes`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              time_mode: timeMode,
+              question_count: questionCount,
+              checking_mode: checkingMode
+            })
+          },
+          authToken
+        )
+
+        const quiz = await res.json()
+
+        await api(
+          `/quizzes/${quiz.id}/questions`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              question_count: questionCount
+            })
+          },
+          authToken
+        )
+
+        if (res.status === 201) {
+          navigation.navigate('Question')
+        } else {
+          navigation.navigate('Home')
+          alert('You cannot proceed, please try again.')
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 

@@ -23,6 +23,7 @@ import RevieweeQuizSubjectScreen from '@screens/Reviewee/Quiz/Subject'
 import RevieweeQuizTimeModeScreen from '@screens/Reviewee/Quiz/TimeMode'
 import RevieweeQuizQuestionCountScreen from '@screens/Reviewee/Quiz/QuestionCount'
 import RevieweeQuizCheckingModeScreen from '@screens/Reviewee/Quiz/CheckingMode'
+import RevieweeQuizQuestionScreen from '@screens/Reviewee/Quiz/Question'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -217,6 +218,10 @@ export default function App() {
                   <Stack.Screen
                     name="CheckingMode"
                     component={RevieweeQuizCheckingModeScreen}
+                  />
+                  <Stack.Screen
+                    name="Question"
+                    component={RevieweeQuizQuestionScreen}
                   />
                   <Stack.Screen
                     name="Account"
