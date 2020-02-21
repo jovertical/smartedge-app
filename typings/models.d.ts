@@ -30,6 +30,7 @@ interface Question extends Model {
   subject_id: number
   body: string
   answers?: Answer[]
+  question?: QuizQuestion
 }
 
 interface Answer extends Model {
@@ -61,4 +62,5 @@ interface QuizAnswer extends Model {
   quiz_id: number
   question_id: number
   answer_id: number
+  answer: Answer
 }

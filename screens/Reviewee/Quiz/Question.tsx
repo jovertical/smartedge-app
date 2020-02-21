@@ -46,9 +46,9 @@ const Item: React.FC<ItemProps> = ({
   )
 }
 
-export default function Question() {
+export default function Question({ navigation }) {
   useDisableBack()
-  const { user, authToken } = React.useContext(AuthContext)
+  const { authToken } = React.useContext(AuthContext)
   const [quiz, setQuiz] = React.useState<Quiz>()
   const [question, setQuestion] = React.useState<Question>()
   const [questionNumber, setQuestionNumber] = React.useState<number>(1)
@@ -70,7 +70,7 @@ export default function Question() {
     )
 
     if (res.status === 201) {
-      const updatedQuiz = await fetchQuiz(quiz.id)
+      const updatedQuiz = await fetchQuiz()
       setQuiz(updatedQuiz)
       setLoading(false)
     } else {
@@ -78,42 +78,49 @@ export default function Question() {
     }
   }
 
-  const fetchQuiz = async (quizId: number): Promise<Quiz> => {
-    const res = await api(`/quizzes/${quizId}`, {}, authToken)
-    const updatedQuiz = await res.json()
-    return updatedQuiz
+  const fetchQuiz = async (): Promise<Quiz> => {
+    const res = await api(`/quiz/active`, {}, authToken)
+
+    if (res.status === 200) {
+      const updatedQuiz = await res.json()
+      return updatedQuiz
+    } else if (res.status === 404) {
+      // no active quiz for the user.
+      navigation.navigate('Tally')
+    }
   }
 
   React.useEffect(() => {
     const bootstrap = async () => {
+      if (!quiz) {
+        return
+      }
+
       try {
-        const answerables = quiz?.questions.filter(
-          q =>
-            quiz?.answers.findIndex(a => a.question_id === q.question_id) === -1
-        )
-        const id = quiz?.questions.find(q => q.number === answerables[0].number)
-          .question_id
-        const res = await api(`/questions/${id}`, {}, authToken)
+        setLoading(true)
+
+        const res = await api(`/quiz/${quiz?.id}/next-question`, {}, authToken)
         const newQuestion = await res.json()
-        setQuestion(newQuestion)
-        setQuestionNumber(answerables[0].number)
-        setLoading(false)
+
+        if (res.status === 200) {
+          setQuestion(newQuestion)
+          setQuestionNumber(newQuestion.question.number)
+          setLoading(false)
+        } else if (res.status === 404) {
+          navigation.navigate('Tally')
+        }
       } catch (error) {
         console.error(error)
       }
     }
 
-    if (quiz) {
-      setLoading(true)
-      bootstrap()
-    }
+    bootstrap()
   }, [quiz?.answers])
 
   React.useEffect(() => {
     const bootstrap = async () => {
       try {
-        const incompleteQuiz = user?.quizzes.find(q => !q.completed_at)
-        const updatedQuiz = await fetchQuiz(incompleteQuiz?.id ?? 1)
+        const updatedQuiz = await fetchQuiz()
         setQuiz(updatedQuiz)
         setLoading(false)
       } catch (error) {
@@ -130,37 +137,37 @@ export default function Question() {
       {loading ? (
         <Text>Fetching question...</Text>
       ) : (
-        <>
-          <View style={styles.details}>
-            <Text color="blue">Q#: {questionNumber}</Text>
-            <Text>{question?.body}</Text>
-          </View>
-          <SafeAreaView style={styles.listContainer}>
-            <FlatList
-              data={question?.answers}
-              renderItem={({ item, ...props }) => (
-                <Item
-                  selectedAnswer={selectedAnswer}
-                  answer={item}
-                  handleItemPress={setSelectedAnswer}
-                  {...props}
-                />
-              )}
-              keyExtractor={(answer: Answer) => answer.id.toString()}
-            />
-            <Button
-              size="lg"
-              onPress={
-                selectedAnswer === -1
-                  ? () => alert('Please select your answer!')
-                  : submitAnswer
-              }
-              title={quiz?.checking_mode === 'per_item' ? 'CHECK' : 'NEXT'}
-              style={styles.button}
-            />
-          </SafeAreaView>
-        </>
-      )}
+          <>
+            <View style={styles.details}>
+              <Text color="blue">Q#: {questionNumber}</Text>
+              <Text>{question?.body}</Text>
+            </View>
+            <SafeAreaView style={styles.listContainer}>
+              <FlatList
+                data={question?.answers}
+                renderItem={({ item, ...props }) => (
+                  <Item
+                    selectedAnswer={selectedAnswer}
+                    answer={item}
+                    handleItemPress={setSelectedAnswer}
+                    {...props}
+                  />
+                )}
+                keyExtractor={(answer: Answer) => answer.id.toString()}
+              />
+              <Button
+                size="lg"
+                onPress={
+                  selectedAnswer === -1
+                    ? () => alert('Please select your answer!')
+                    : submitAnswer
+                }
+                title={quiz?.checking_mode === 'per_item' ? 'CHECK' : 'NEXT'}
+                style={styles.button}
+              />
+            </SafeAreaView>
+          </>
+        )}
     </Master>
   )
 }

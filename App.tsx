@@ -24,6 +24,7 @@ import RevieweeQuizTimeModeScreen from '@screens/Reviewee/Quiz/TimeMode'
 import RevieweeQuizQuestionCountScreen from '@screens/Reviewee/Quiz/QuestionCount'
 import RevieweeQuizCheckingModeScreen from '@screens/Reviewee/Quiz/CheckingMode'
 import RevieweeQuizQuestionScreen from '@screens/Reviewee/Quiz/Question'
+import RevieweeQuizTallyScreen from '@screens/Reviewee/Quiz/Tally'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -168,69 +169,73 @@ export default function App() {
               }}
             />
           ) : (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              {state.user?.type === 'admin' ? (
                 <>
-                  <Stack.Screen
-                    name="SubjectList"
-                    component={AdminSubjectListScreen}
-                  />
-                  <Stack.Screen
-                    name="SubjectEdit"
-                    component={AdminSubjectEditScreen}
-                  />
-                  <Stack.Screen
-                    name="SubjectQuestions"
-                    component={AdminSubjectQuestionsScreen}
-                  />
-                  <Stack.Screen
-                    name="QuestionEdit"
-                    component={AdminQuestionEditScreen}
-                  />
-                  <Stack.Screen
-                    name="QuestionAnswers"
-                    component={AdminQuestionAnswersScreen}
-                  />
-                  <Stack.Screen
-                    name="AnswerEdit"
-                    component={AdminAnswerEditScreen}
-                  />
-                  <Stack.Screen
-                    name="Account"
-                    component={AdminAccountsScreen}
-                  />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen
-                    name="SubjectList"
-                    component={RevieweeQuizSubjectScreen}
-                  />
-                  <Stack.Screen
-                    name="TimeMode"
-                    component={RevieweeQuizTimeModeScreen}
-                  />
-                  <Stack.Screen
-                    name="QuestionCount"
-                    component={RevieweeQuizQuestionCountScreen}
-                  />
-                  <Stack.Screen
-                    name="CheckingMode"
-                    component={RevieweeQuizCheckingModeScreen}
-                  />
-                  <Stack.Screen
-                    name="Question"
-                    component={RevieweeQuizQuestionScreen}
-                  />
-                  <Stack.Screen
-                    name="Account"
-                    component={RevieweeAccountScreen}
-                  />
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  {state.user?.type === 'admin' ? (
+                    <>
+                      <Stack.Screen
+                        name="SubjectList"
+                        component={AdminSubjectListScreen}
+                      />
+                      <Stack.Screen
+                        name="SubjectEdit"
+                        component={AdminSubjectEditScreen}
+                      />
+                      <Stack.Screen
+                        name="SubjectQuestions"
+                        component={AdminSubjectQuestionsScreen}
+                      />
+                      <Stack.Screen
+                        name="QuestionEdit"
+                        component={AdminQuestionEditScreen}
+                      />
+                      <Stack.Screen
+                        name="QuestionAnswers"
+                        component={AdminQuestionAnswersScreen}
+                      />
+                      <Stack.Screen
+                        name="AnswerEdit"
+                        component={AdminAnswerEditScreen}
+                      />
+                      <Stack.Screen
+                        name="Account"
+                        component={AdminAccountsScreen}
+                      />
+                    </>
+                  ) : (
+                      <>
+                        <Stack.Screen
+                          name="SubjectList"
+                          component={RevieweeQuizSubjectScreen}
+                        />
+                        <Stack.Screen
+                          name="TimeMode"
+                          component={RevieweeQuizTimeModeScreen}
+                        />
+                        <Stack.Screen
+                          name="QuestionCount"
+                          component={RevieweeQuizQuestionCountScreen}
+                        />
+                        <Stack.Screen
+                          name="CheckingMode"
+                          component={RevieweeQuizCheckingModeScreen}
+                        />
+                        <Stack.Screen
+                          name="Question"
+                          component={RevieweeQuizQuestionScreen}
+                        />
+                        <Stack.Screen
+                          name="Tally"
+                          component={RevieweeQuizTallyScreen}
+                        />
+                        <Stack.Screen
+                          name="Account"
+                          component={RevieweeAccountScreen}
+                        />
+                      </>
+                    )}
                 </>
               )}
-            </>
-          )}
         </Stack.Navigator>
       </AuthContext.Provider>
     </NavigationContainer>
