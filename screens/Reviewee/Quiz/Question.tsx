@@ -86,7 +86,9 @@ export default function Question({ navigation }) {
       return updatedQuiz
     } else if (res.status === 404) {
       // no active quiz for the user.
-      navigation.navigate('Tally')
+      navigation.navigate('Tally', {
+        id: quiz.id
+      })
     }
   }
 
@@ -107,7 +109,9 @@ export default function Question({ navigation }) {
           setQuestionNumber(newQuestion.question.number)
           setLoading(false)
         } else if (res.status === 404) {
-          navigation.navigate('Tally')
+          navigation.navigate('Tally', {
+            id: quiz.id
+          })
         }
       } catch (error) {
         console.error(error)
@@ -137,37 +141,37 @@ export default function Question({ navigation }) {
       {loading ? (
         <Text>Fetching question...</Text>
       ) : (
-          <>
-            <View style={styles.details}>
-              <Text color="blue">Q#: {questionNumber}</Text>
-              <Text>{question?.body}</Text>
-            </View>
-            <SafeAreaView style={styles.listContainer}>
-              <FlatList
-                data={question?.answers}
-                renderItem={({ item, ...props }) => (
-                  <Item
-                    selectedAnswer={selectedAnswer}
-                    answer={item}
-                    handleItemPress={setSelectedAnswer}
-                    {...props}
-                  />
-                )}
-                keyExtractor={(answer: Answer) => answer.id.toString()}
-              />
-              <Button
-                size="lg"
-                onPress={
-                  selectedAnswer === -1
-                    ? () => alert('Please select your answer!')
-                    : submitAnswer
-                }
-                title={quiz?.checking_mode === 'per_item' ? 'CHECK' : 'NEXT'}
-                style={styles.button}
-              />
-            </SafeAreaView>
-          </>
-        )}
+        <>
+          <View style={styles.details}>
+            <Text color="blue">Q#: {questionNumber}</Text>
+            <Text>{question?.body}</Text>
+          </View>
+          <SafeAreaView style={styles.listContainer}>
+            <FlatList
+              data={question?.answers}
+              renderItem={({ item, ...props }) => (
+                <Item
+                  selectedAnswer={selectedAnswer}
+                  answer={item}
+                  handleItemPress={setSelectedAnswer}
+                  {...props}
+                />
+              )}
+              keyExtractor={(answer: Answer) => answer.id.toString()}
+            />
+            <Button
+              size="lg"
+              onPress={
+                selectedAnswer === -1
+                  ? () => alert('Please select your answer!')
+                  : submitAnswer
+              }
+              title={quiz?.checking_mode === 'per_item' ? 'CHECK' : 'NEXT'}
+              style={styles.button}
+            />
+          </SafeAreaView>
+        </>
+      )}
     </Master>
   )
 }
