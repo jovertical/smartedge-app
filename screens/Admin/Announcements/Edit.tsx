@@ -43,7 +43,7 @@ export default function Edit({ navigation, route }) {
           break
 
         case 200:
-          navigation.navigate('AnnouncementList', {
+          navigation.navigate('Announcement', {
             refresh: true
           })
           break
@@ -72,6 +72,8 @@ export default function Edit({ navigation, route }) {
 
   return (
     <Master
+      navigation={navigation}
+      withBack
       title="ANNOUNCEMENTS"
       titleIcon={announcementIcon}
       titleIconPlacement="right"

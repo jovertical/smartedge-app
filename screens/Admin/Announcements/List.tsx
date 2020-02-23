@@ -28,6 +28,8 @@ export default function List({ navigation, route }) {
 
   return (
     <Master
+      navigation={navigation}
+      withBack
       title="ANNOUNCEMENTS"
       titleIcon={announcementIcon}
       titleIconPlacement="right"

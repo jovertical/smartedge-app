@@ -37,7 +37,7 @@ const Item: React.FC<ItemProps> = ({ user }) => {
   )
 }
 
-export default function Accounts() {
+export default function Accounts({ navigation }) {
   const { authToken, logout } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [users, setUsers] = React.useState<User[]>([])
@@ -58,7 +58,12 @@ export default function Accounts() {
   }, [])
 
   return (
-    <Master title="ACCOUNT INFO" titleIcon={accountIcon}>
+    <Master
+      navigation={navigation}
+      withBack
+      title="ACCOUNT INFO"
+      titleIcon={accountIcon}
+    >
       {loading ? (
         <Text>Fetching reviewees...</Text>
       ) : (

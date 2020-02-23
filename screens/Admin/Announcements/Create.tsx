@@ -40,7 +40,7 @@ export default function Create({ navigation }) {
           break
 
         case 201:
-          navigation.navigate('AnnouncementList', {
+          navigation.navigate('Announcement', {
             refresh: true
           })
           break
@@ -55,6 +55,8 @@ export default function Create({ navigation }) {
 
   return (
     <Master
+      navigation={navigation}
+      withBack
       title="ANNOUNCEMENTS"
       titleIcon={announcementIcon}
       titleIconPlacement="right"

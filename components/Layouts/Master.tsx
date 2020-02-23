@@ -5,18 +5,21 @@ import {
   StyleSheet,
   Image,
   ImageSourcePropType,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity
 } from 'react-native'
+import backImage from '@assets/png/back.png'
 import logoImage from '@assets/png/logo.png'
 import overlayImage from '@assets/png/overlay.png'
 import Text from '@components/Text'
 import { colors } from '@constants/theme'
 
 interface Props extends ViewProps {
+  navigation?: any
   title?: string
   titleIcon?: ImageSourcePropType
   titleIconPlacement?: 'right' | 'left'
-  sectionType?: 'TAQ' | 'UPLOADS' | 'ACCOUNT' | 'ANNOUNCEMENTS'
+  withBack?: boolean
   horizontalAlign?: 'left' | 'center' | 'right'
   verticalAlign?: 'top' | 'center' | 'bottom'
   contentPadding?: number
@@ -24,9 +27,11 @@ interface Props extends ViewProps {
 }
 
 export default function Master({
+  navigation,
   title,
   titleIcon,
   titleIconPlacement = 'right',
+  withBack = false,
   horizontalAlign = 'left',
   verticalAlign = 'top',
   contentPadding = 10,
@@ -81,6 +86,14 @@ export default function Master({
         >
           <>{children}</>
         </View>
+        {withBack && (
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={backImage} style={styles.backImage} />
+          </TouchableOpacity>
+        )}
       </ImageBackground>
     </View>
   )
@@ -132,5 +145,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1
+  },
+  backButton: {
+    position: 'absolute',
+    bottom: 25,
+    right: 25
+  },
+  backImage: {
+    width: 70,
+    height: 70
   }
 })

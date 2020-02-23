@@ -67,7 +67,13 @@ export default function Edit({ navigation, route }) {
   }, [])
 
   return (
-    <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
+    <Master
+      navigation={navigation}
+      withBack
+      title="TAKE A QUIZ"
+      titleIcon={quizIcon}
+      titleIconPlacement="left"
+    >
       {loading ? (
         <Text>Please wait...</Text>
       ) : (

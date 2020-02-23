@@ -74,7 +74,13 @@ export default function Answers({ navigation, route }) {
   }, [route.params])
 
   return (
-    <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
+    <Master
+      navigation={navigation}
+      withBack
+      title="TAKE A QUIZ"
+      titleIcon={quizIcon}
+      titleIconPlacement="left"
+    >
       {loading ? (
         <Text>Fetching answers...</Text>
       ) : (

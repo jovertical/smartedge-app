@@ -6,11 +6,16 @@ import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import accountIcon from '@assets/png/icons/account.png'
 
-export default function Account() {
+export default function Account({ navigation }) {
   const { user, logout } = React.useContext(AuthContext)
 
   return (
-    <Master title="ACCOUNT INFO" titleIcon={accountIcon}>
+    <Master
+      navigation={navigation}
+      title="ACCOUNT INFO"
+      titleIcon={accountIcon}
+      withBack
+    >
       <View style={styles.container}>
         <Text size="lg" color="blue">
           ACCOUNT INFORMATION
