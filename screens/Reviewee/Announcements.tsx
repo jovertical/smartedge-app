@@ -6,7 +6,7 @@ import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 
-export default function Announcements({ route }) {
+export default function Announcements({ navigation, route }) {
   const { authToken } = React.useContext(AuthContext)
   const [loading, setLoading] = React.useState<Boolean>(true)
   const [announcements, setAnnouncements] = React.useState<Announcement[]>([])
@@ -27,20 +27,22 @@ export default function Announcements({ route }) {
 
   return (
     <Master
+      navigation={navigation}
+      withBack
       title="ANNOUNCEMENTS"
       titleIcon={announcementIcon}
       titleIconPlacement="right"
     >
-      {loading ? (
+      {loading || announcements.length < 1 ? (
         <Text>Fetching announcements...</Text>
       ) : (
-        <View style={styles.details}>
-          <Text size="xl" color="blue" weight="bold">
-            {announcements[0].title.toUpperCase()}
-          </Text>
-          <Text style={styles.body}>{announcements[0].body}</Text>
-        </View>
-      )}
+          <View style={styles.details}>
+            <Text size="xl" color="blue" weight="bold">
+              {announcements[0]?.title.toUpperCase()}
+            </Text>
+            <Text style={styles.body}>{announcements[0]?.body}</Text>
+          </View>
+        )}
     </Master>
   )
 }

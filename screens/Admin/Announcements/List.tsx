@@ -34,37 +34,37 @@ export default function List({ navigation, route }) {
       titleIcon={announcementIcon}
       titleIconPlacement="right"
     >
-      {loading ? (
+      {loading || announcements.length < 1 ? (
         <Text>Fetching announcements...</Text>
       ) : (
-        <>
-          <View style={styles.details}>
+          <>
+            <View style={styles.details}>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() =>
+                  navigation.navigate('AnnouncementEdit', {
+                    id: announcements[0].id
+                  })
+                }
+              >
+                <Image source={editIcon} style={styles.editIcon} />
+              </TouchableOpacity>
+              <Text size="xl" color="blue" weight="bold">
+                {announcements[0].title.toUpperCase()}
+              </Text>
+              <Text style={styles.body}>{announcements[0].body}</Text>
+            </View>
             <TouchableOpacity
-              style={styles.editButton}
-              onPress={() =>
-                navigation.navigate('AnnouncementEdit', {
-                  id: announcements[0].id
-                })
-              }
+              style={styles.action}
+              onPress={() => navigation.navigate('AnnouncementCreate')}
             >
-              <Image source={editIcon} style={styles.editIcon} />
+              <Text>+ ADD ANNOUNCEMENT</Text>
             </TouchableOpacity>
-            <Text size="xl" color="blue" weight="bold">
-              {announcements[0].title.toUpperCase()}
-            </Text>
-            <Text style={styles.body}>{announcements[0].body}</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.action}
-            onPress={() => navigation.navigate('AnnouncementCreate')}
-          >
-            <Text>+ ADD ANNOUNCEMENT</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.action}>
-            <Text>+ ADD IMAGE</Text>
-          </TouchableOpacity>
-        </>
-      )}
+            <TouchableOpacity style={styles.action}>
+              <Text>+ ADD IMAGE</Text>
+            </TouchableOpacity>
+          </>
+        )}
     </Master>
   )
 }
