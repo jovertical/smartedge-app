@@ -39,10 +39,10 @@ const Item: React.FC<ItemProps> = ({
           showAnswer && selectedAnswer === answer.id && !answer.correct
             ? colors.red
             : showAnswer && answer.correct
-            ? colors.green
-            : answer.id === selectedAnswer
-            ? 'rgba(52, 52, 52, 0.7)'
-            : 'rgba(52, 52, 52, 0.4)'
+              ? colors.green
+              : answer.id === selectedAnswer
+                ? 'rgba(52, 52, 52, 0.7)'
+                : 'rgba(52, 52, 52, 0.4)'
       }}
       onPress={() => !showAnswer && handleItemPress(answer.id)}
     >
@@ -60,6 +60,7 @@ export default function Question({ navigation }) {
   const [question, setQuestion] = React.useState<Question>()
   const [questionNumber, setQuestionNumber] = React.useState<number>(1)
   const [selectedAnswer, setSelectedAnswer] = React.useState<number>(-1)
+  const [time, setTime] = React.useState(0)
   const [showAnswer, setShowAnswer] = React.useState<boolean>(false)
   const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -150,7 +151,9 @@ export default function Question({ navigation }) {
   React.useEffect(() => {
     const bootstrap = async () => {
       try {
+        setLoading(true)
         const updatedQuiz = await fetchQuiz()
+        setTime(updatedQuiz?.questions.length * 60)
         setQuiz(updatedQuiz)
         setLoading(false)
       } catch (error) {
@@ -158,56 +161,96 @@ export default function Question({ navigation }) {
       }
     }
 
-    setLoading(true)
     bootstrap()
   }, [])
+
+  React.useEffect(() => {
+    const complete = async () => {
+      try {
+        setLoading(true)
+        await api(`/quizzes/${quiz.id}`, { method: 'PATCH' }, authToken)
+        navigation.navigate('Tally', { id: quiz?.id })
+      } catch (error) {
+        alert(error?.message)
+      }
+    }
+
+    if (quiz?.time_mode === 'timed' && time < 0) {
+      complete()
+    }
+  }, [time])
+
+  React.useEffect(() => {
+    const recorder = setInterval(() => {
+      setTime(time - 1)
+    }, 1000)
+
+    return () => {
+      clearInterval(recorder)
+    }
+  })
 
   return (
     <Master title="TAKE A QUIZ" titleIcon={quizIcon} titleIconPlacement="left">
       {loading ? (
         <Text>Fetching question...</Text>
       ) : (
-        <>
-          <View style={styles.details}>
-            <Text color="blue">Q#: {questionNumber}</Text>
-            <Text>{question?.body}</Text>
-          </View>
-          <SafeAreaView style={styles.listContainer}>
-            <FlatList
-              data={question?.answers}
-              renderItem={({ item, ...props }) => (
-                <Item
-                  selectedAnswer={selectedAnswer}
-                  showAnswer={showAnswer}
-                  answer={item}
-                  handleItemPress={setSelectedAnswer}
-                  {...props}
-                />
-              )}
-              keyExtractor={(answer: Answer) => answer.id.toString()}
-            />
-            <Button
-              size="lg"
-              onPress={
-                selectedAnswer === -1
-                  ? () => alert('Please select your answer!')
-                  : handleSubmit
-              }
-              title={
-                quiz?.checking_mode === 'per_item' && !showAnswer
-                  ? 'CHECK'
-                  : 'NEXT'
-              }
-              style={styles.button}
-            />
-          </SafeAreaView>
-        </>
-      )}
+          <>
+            {quiz?.time_mode === 'timed' && (
+              <View style={styles.timer}>
+                <Text size="xl" weight="bold">
+                  {time}
+                </Text>
+              </View>
+            )}
+            <View style={styles.details}>
+              <Text size="lg" color="blue">
+                Q{questionNumber}
+              </Text>
+              <Text>{question?.body}</Text>
+            </View>
+            <SafeAreaView style={styles.listContainer}>
+              <FlatList
+                data={question?.answers}
+                renderItem={({ item, ...props }) => (
+                  <Item
+                    selectedAnswer={selectedAnswer}
+                    showAnswer={showAnswer}
+                    answer={item}
+                    handleItemPress={setSelectedAnswer}
+                    {...props}
+                  />
+                )}
+                keyExtractor={(answer: Answer) => answer.id.toString()}
+              />
+              <Button
+                size="lg"
+                onPress={
+                  selectedAnswer === -1
+                    ? () => alert('Please select your answer!')
+                    : handleSubmit
+                }
+                title={
+                  quiz?.checking_mode === 'per_item' && !showAnswer
+                    ? 'CHECK'
+                    : 'NEXT'
+                }
+                style={styles.button}
+              />
+            </SafeAreaView>
+          </>
+        )}
     </Master>
   )
 }
 
 const styles = StyleSheet.create({
+  timer: {
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 5,
+    padding: 10
+  },
   details: {
     width: '100%',
     marginBottom: 10,
