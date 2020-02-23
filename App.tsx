@@ -19,12 +19,17 @@ import AdminSubjectQuestionsScreen from '@screens/Admin/Subjects/Questions'
 import AdminQuestionEditScreen from '@screens/Admin/Questions/Edit'
 import AdminQuestionAnswersScreen from '@screens/Admin/Questions/Answers'
 import AdminAnswerEditScreen from '@screens/Admin/Answers/Edit'
+import AdminAnnouncementScreen from '@screens/Admin/Announcements/List'
+import AdminAnnouncementCreateScreen from '@screens/Admin/Announcements/Create'
+import AdminAnnouncementEditScreen from '@screens/Admin/Announcements/Edit'
+
 import RevieweeQuizSubjectScreen from '@screens/Reviewee/Quiz/Subject'
 import RevieweeQuizTimeModeScreen from '@screens/Reviewee/Quiz/TimeMode'
 import RevieweeQuizQuestionCountScreen from '@screens/Reviewee/Quiz/QuestionCount'
 import RevieweeQuizCheckingModeScreen from '@screens/Reviewee/Quiz/CheckingMode'
 import RevieweeQuizQuestionScreen from '@screens/Reviewee/Quiz/Question'
 import RevieweeQuizTallyScreen from '@screens/Reviewee/Quiz/Tally'
+import RevieweeAnnouncementScreen from '@screens/Reviewee/Announcements'
 import RevieweeAccountScreen from '@screens/Reviewee/Account'
 
 type State = {
@@ -198,6 +203,18 @@ export default function App() {
                     component={AdminAnswerEditScreen}
                   />
                   <Stack.Screen
+                    name="Announcement"
+                    component={AdminAnnouncementScreen}
+                  />
+                  <Stack.Screen
+                    name="AnnouncementCreate"
+                    component={AdminAnnouncementCreateScreen}
+                  />
+                  <Stack.Screen
+                    name="AnnouncementEdit"
+                    component={AdminAnnouncementEditScreen}
+                  />
+                  <Stack.Screen
                     name="Account"
                     component={AdminAccountsScreen}
                   />
@@ -227,6 +244,10 @@ export default function App() {
                   <Stack.Screen
                     name="Tally"
                     component={RevieweeQuizTallyScreen}
+                  />
+                  <Stack.Screen
+                    name="Announcement"
+                    component={RevieweeAnnouncementScreen}
                   />
                   <Stack.Screen
                     name="Account"

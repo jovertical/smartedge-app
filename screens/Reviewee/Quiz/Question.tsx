@@ -39,10 +39,10 @@ const Item: React.FC<ItemProps> = ({
           showAnswer && selectedAnswer === answer.id && !answer.correct
             ? colors.red
             : showAnswer && answer.correct
-              ? colors.green
-              : answer.id === selectedAnswer
-                ? 'rgba(52, 52, 52, 0.7)'
-                : 'rgba(52, 52, 52, 0.4)'
+            ? colors.green
+            : answer.id === selectedAnswer
+            ? 'rgba(52, 52, 52, 0.7)'
+            : 'rgba(52, 52, 52, 0.4)'
       }}
       onPress={() => !showAnswer && handleItemPress(answer.id)}
     >
@@ -195,51 +195,51 @@ export default function Question({ navigation }) {
       {loading ? (
         <Text>Fetching question...</Text>
       ) : (
-          <>
-            {quiz?.time_mode === 'timed' && (
-              <View style={styles.timer}>
-                <Text size="xl" weight="bold">
-                  {time}
-                </Text>
-              </View>
-            )}
-            <View style={styles.details}>
-              <Text size="lg" color="blue">
-                Q{questionNumber}
+        <>
+          {quiz?.time_mode === 'timed' && (
+            <View style={styles.timer}>
+              <Text size="xl" weight="bold">
+                {time}
               </Text>
-              <Text>{question?.body}</Text>
             </View>
-            <SafeAreaView style={styles.listContainer}>
-              <FlatList
-                data={question?.answers}
-                renderItem={({ item, ...props }) => (
-                  <Item
-                    selectedAnswer={selectedAnswer}
-                    showAnswer={showAnswer}
-                    answer={item}
-                    handleItemPress={setSelectedAnswer}
-                    {...props}
-                  />
-                )}
-                keyExtractor={(answer: Answer) => answer.id.toString()}
-              />
-              <Button
-                size="lg"
-                onPress={
-                  selectedAnswer === -1
-                    ? () => alert('Please select your answer!')
-                    : handleSubmit
-                }
-                title={
-                  quiz?.checking_mode === 'per_item' && !showAnswer
-                    ? 'CHECK'
-                    : 'NEXT'
-                }
-                style={styles.button}
-              />
-            </SafeAreaView>
-          </>
-        )}
+          )}
+          <View style={styles.details}>
+            <Text size="lg" color="blue">
+              Q{questionNumber}
+            </Text>
+            <Text>{question?.body}</Text>
+          </View>
+          <SafeAreaView style={styles.listContainer}>
+            <FlatList
+              data={question?.answers}
+              renderItem={({ item, ...props }) => (
+                <Item
+                  selectedAnswer={selectedAnswer}
+                  showAnswer={showAnswer}
+                  answer={item}
+                  handleItemPress={setSelectedAnswer}
+                  {...props}
+                />
+              )}
+              keyExtractor={(answer: Answer) => answer.id.toString()}
+            />
+            <Button
+              size="lg"
+              onPress={
+                selectedAnswer === -1
+                  ? () => alert('Please select your answer!')
+                  : handleSubmit
+              }
+              title={
+                quiz?.checking_mode === 'per_item' && !showAnswer
+                  ? 'CHECK'
+                  : 'NEXT'
+              }
+              style={styles.button}
+            />
+          </SafeAreaView>
+        </>
+      )}
     </Master>
   )
 }

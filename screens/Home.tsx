@@ -15,7 +15,11 @@ export default function Home({ navigation }) {
   return (
     <Master verticalAlign="center" horizontalAlign="right" contentPadding={0}>
       <View style={styles.linkSmall}>
-        <Text color="white" style={styles.linkSmallText}>
+        <Text
+          color="white"
+          style={styles.linkSmallText}
+          onPress={() => navigation.navigate('Announcement')}
+        >
           ANNOUNCEMENTS
         </Text>
         <Image source={announcementIcon} style={styles.smallIcon} />

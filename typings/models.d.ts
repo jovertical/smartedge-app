@@ -64,3 +64,8 @@ interface QuizAnswer extends Model {
   answer_id: number
   answer: Answer
 }
+
+interface Announcement extends Model {
+  title: string
+  body?: string
+}
