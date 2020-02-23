@@ -13,10 +13,12 @@ import Text from '@components/Text'
 import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 import useDisableBack from '@hooks/useDisableBack'
+import { colors } from '@constants/theme'
 
 interface ItemProps {
   index: number
   selectedAnswer: number
+  showAnswer: boolean
   answer: Answer
   handleItemPress: Function
 }
@@ -24,6 +26,7 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({
   index,
   selectedAnswer,
+  showAnswer,
   answer,
   handleItemPress
 }) => {
@@ -33,11 +36,15 @@ const Item: React.FC<ItemProps> = ({
       style={{
         ...styles.listItem,
         backgroundColor:
-          answer.id === selectedAnswer
+          showAnswer && selectedAnswer === answer.id && !answer.correct
+            ? colors.red
+            : showAnswer && answer.correct
+            ? colors.green
+            : answer.id === selectedAnswer
             ? 'rgba(52, 52, 52, 0.7)'
             : 'rgba(52, 52, 52, 0.4)'
       }}
-      onPress={() => handleItemPress(answer.id)}
+      onPress={() => !showAnswer && handleItemPress(answer.id)}
     >
       <Text size="lg" color="gray-900">
         {`${String.fromCharCode(97 + index).toUpperCase()}. ${answer?.body}`}
@@ -53,28 +60,47 @@ export default function Question({ navigation }) {
   const [question, setQuestion] = React.useState<Question>()
   const [questionNumber, setQuestionNumber] = React.useState<number>(1)
   const [selectedAnswer, setSelectedAnswer] = React.useState<number>(-1)
+  const [showAnswer, setShowAnswer] = React.useState<boolean>(false)
   const [loading, setLoading] = React.useState<boolean>(false)
 
-  const submitAnswer = async () => {
-    setLoading(true)
-
-    const res = await api(
-      `/quizzes/${quiz.id}/answers`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          answer_id: selectedAnswer
-        })
-      },
-      authToken
-    )
-
-    if (res.status === 201) {
-      const updatedQuiz = await fetchQuiz()
-      setQuiz(updatedQuiz)
-      setLoading(false)
+  const handleSubmit = async () => {
+    if (quiz?.checking_mode === 'per_item') {
+      if (showAnswer) {
+        setLoading(true)
+        setQuiz(await fetchQuiz())
+        setSelectedAnswer(-1)
+        setShowAnswer(false)
+        setLoading(false)
+      } else {
+        await submitAnswer()
+        setShowAnswer(true)
+      }
     } else {
-      throw new Error('Cannot submit your answer, try again later.')
+      setLoading(true)
+      await submitAnswer()
+      setQuiz(await fetchQuiz())
+      setLoading(false)
+    }
+  }
+
+  const submitAnswer = async () => {
+    try {
+      const res = await api(
+        `/quizzes/${quiz?.id}/answers`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            answer_id: selectedAnswer
+          })
+        },
+        authToken
+      )
+
+      if (res.status !== 201) {
+        throw new Error('Cannot submit your answer, try again later.')
+      }
+    } catch (error) {
+      alert(error.message)
     }
   }
 
@@ -87,7 +113,7 @@ export default function Question({ navigation }) {
     } else if (res.status === 404) {
       // no active quiz for the user.
       navigation.navigate('Tally', {
-        id: quiz.id
+        id: quiz?.id
       })
     }
   }
@@ -102,7 +128,7 @@ export default function Question({ navigation }) {
         setLoading(true)
 
         const res = await api(`/quiz/${quiz?.id}/next-question`, {}, authToken)
-        const newQuestion = await res.json()
+        const newQuestion: Question = await res.json()
 
         if (res.status === 200) {
           setQuestion(newQuestion)
@@ -110,7 +136,7 @@ export default function Question({ navigation }) {
           setLoading(false)
         } else if (res.status === 404) {
           navigation.navigate('Tally', {
-            id: quiz.id
+            id: quiz?.id
           })
         }
       } catch (error) {
@@ -152,6 +178,7 @@ export default function Question({ navigation }) {
               renderItem={({ item, ...props }) => (
                 <Item
                   selectedAnswer={selectedAnswer}
+                  showAnswer={showAnswer}
                   answer={item}
                   handleItemPress={setSelectedAnswer}
                   {...props}
@@ -164,9 +191,13 @@ export default function Question({ navigation }) {
               onPress={
                 selectedAnswer === -1
                   ? () => alert('Please select your answer!')
-                  : submitAnswer
+                  : handleSubmit
               }
-              title={quiz?.checking_mode === 'per_item' ? 'CHECK' : 'NEXT'}
+              title={
+                quiz?.checking_mode === 'per_item' && !showAnswer
+                  ? 'CHECK'
+                  : 'NEXT'
+              }
               style={styles.button}
             />
           </SafeAreaView>
