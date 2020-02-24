@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   FlatList
 } from 'react-native'
+import truncate from 'lodash/truncate'
 import quizIcon from '@assets/png/icons/quiz.png'
 import editIcon from '@assets/png/icons/edit-black.png'
 import Master from '@components/Layouts/Master'
@@ -30,7 +31,7 @@ const Item: React.FC<ItemProps> = ({ index, question, navigation }) => {
         }
       >
         <Text size="lg" color="gray-900">
-          {`${index + 1}. ${question.body}`}
+          {`${index + 1}. ${truncate(question.body, { length: 50 })}`}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -78,7 +79,9 @@ export default function Questions({ navigation, route }) {
           <View style={styles.details}>
             <Text color="blue">LIST OF QUESTIONS:</Text>
           </View>
-          <SafeAreaView style={styles.listContainer}>
+          <SafeAreaView
+            style={{ ...styles.listContainer, height: 65 * questions.length }}
+          >
             <FlatList
               data={questions}
               renderItem={({ item, index }) => (
@@ -87,6 +90,16 @@ export default function Questions({ navigation, route }) {
               keyExtractor={question => question.id.toString()}
             />
           </SafeAreaView>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() =>
+              navigation.navigate('QuestionCreate', {
+                id: subjectId
+              })
+            }
+          >
+            <Text>+ ADD QUESTION</Text>
+          </TouchableOpacity>
         </>
       )}
     </Master>
@@ -101,15 +114,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   listContainer: {
-    maxHeight: '80%'
+    maxHeight: '65%'
   },
   listItem: {
     width: '100%',
+    height: 60,
     backgroundColor: 'rgba(52, 52, 52, 0.4)',
     marginBottom: 5,
     padding: 10,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
   listItemContent: {
@@ -119,6 +133,11 @@ const styles = StyleSheet.create({
   editIcon: {
     width: 30,
     height: 30
+  },
+  action: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   bottomBar: {
     height: '20%',

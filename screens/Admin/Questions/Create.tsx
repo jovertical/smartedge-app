@@ -9,13 +9,12 @@ import { AuthContext } from '@contexts/AuthContext'
 import api from '@helpers/api'
 
 type Errors = {
-  name?: string[]
   body?: string[]
 }
 
-export default function Create({ navigation }) {
+export default function Create({ navigation, route }) {
+  const subjectId = route.params?.id
   const { authToken } = React.useContext(AuthContext)
-  const [name, setName] = React.useState('')
   const [body, setBody] = React.useState('')
   const [errors, setErrors] = React.useState<Errors>({})
   const [loading, setLoading] = React.useState(false)
@@ -23,12 +22,12 @@ export default function Create({ navigation }) {
   const handleSubmit = async () => {
     try {
       setLoading(true)
+
       const res = await api(
-        '/subjects',
+        `/subjects/${subjectId}/questions`,
         {
           method: 'POST',
           body: JSON.stringify({
-            name,
             body
           })
         },
@@ -43,7 +42,7 @@ export default function Create({ navigation }) {
           break
 
         case 201:
-          navigation.navigate('SubjectList', {
+          navigation.navigate('SubjectQuestions', {
             refresh: true
           })
           break
@@ -62,24 +61,13 @@ export default function Create({ navigation }) {
       titleIconPlacement="left"
     >
       <TextInput
-        label="Subject Name"
-        value={name}
-        onChangeText={text => {
-          setName(text)
-          setErrors(omit(errors, ['name']))
-        }}
-        style={styles.inputContainer}
-        error={errors.name}
-      />
-
-      <TextInput
-        label="Subject Description"
+        label="Question"
         value={body}
         onChangeText={text => {
           setBody(text)
           setErrors(omit(errors, ['body']))
         }}
-        style={{ ...styles.inputContainer }}
+        style={styles.inputContainer}
         multiline={true}
         numberOfLines={4}
         error={errors.body}

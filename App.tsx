@@ -17,6 +17,7 @@ import AdminSubjectListScreen from '@screens/Admin/Subjects/List'
 import AdminSubjectCreateScreen from '@screens/Admin/Subjects/Create'
 import AdminSubjectEditScreen from '@screens/Admin/Subjects/Edit'
 import AdminSubjectQuestionsScreen from '@screens/Admin/Subjects/Questions'
+import AdminQuestionCreateScreen from '@screens/Admin/Questions/Create'
 import AdminQuestionEditScreen from '@screens/Admin/Questions/Edit'
 import AdminQuestionAnswersScreen from '@screens/Admin/Questions/Answers'
 import AdminAnswerEditScreen from '@screens/Admin/Answers/Edit'
@@ -194,6 +195,10 @@ export default function App() {
                   <Stack.Screen
                     name="SubjectQuestions"
                     component={AdminSubjectQuestionsScreen}
+                  />
+                  <Stack.Screen
+                    name="QuestionCreate"
+                    component={AdminQuestionCreateScreen}
                   />
                   <Stack.Screen
                     name="QuestionEdit"
