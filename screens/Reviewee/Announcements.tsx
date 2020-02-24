@@ -36,13 +36,13 @@ export default function Announcements({ navigation, route }) {
       {loading || announcements.length < 1 ? (
         <Text>Fetching announcements...</Text>
       ) : (
-          <View style={styles.details}>
-            <Text size="xl" color="blue" weight="bold">
-              {announcements[0]?.title.toUpperCase()}
-            </Text>
-            <Text style={styles.body}>{announcements[0]?.body}</Text>
-          </View>
-        )}
+        <View style={styles.details}>
+          <Text size="xl" color="blue" weight="bold">
+            {announcements[0]?.title.toUpperCase()}
+          </Text>
+          <Text style={styles.body}>{announcements[0]?.body}</Text>
+        </View>
+      )}
     </Master>
   )
 }

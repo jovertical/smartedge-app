@@ -19,8 +19,8 @@ type Errors = {
 
 export default function Login() {
   const { login } = React.useContext(AuthContext)
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState('josh.sisor@gmail.com')
+  const [password, setPassword] = React.useState('smartedge')
   const [errors, setErrors] = React.useState<Errors>({})
 
   const handleLogin = async () => {

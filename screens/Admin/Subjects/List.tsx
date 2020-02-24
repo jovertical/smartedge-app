@@ -77,7 +77,13 @@ export default function List({ navigation, route }) {
           <View style={styles.details}>
             <Text color="blue">SELECT QUIZ SUBJECT:</Text>
           </View>
-          <SafeAreaView style={styles.listContainer}>
+          <SafeAreaView
+            style={{
+              ...styles.listContainer,
+              height: 65 * subjects.length,
+              maxHeight: '65%'
+            }}
+          >
             <FlatList
               data={subjects}
               renderItem={({ item }) => (
@@ -86,6 +92,12 @@ export default function List({ navigation, route }) {
               keyExtractor={subject => subject.id.toString()}
             />
           </SafeAreaView>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => navigation.navigate('SubjectCreate')}
+          >
+            <Text>+ ADD SUBJECT</Text>
+          </TouchableOpacity>
         </>
       )}
     </Master>
@@ -99,11 +111,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
-  listContainer: {
-    maxHeight: '80%'
-  },
+  listContainer: {},
   listItem: {
     width: '100%',
+    height: 60,
     backgroundColor: 'rgba(52, 52, 52, 0.4)',
     marginBottom: 5,
     padding: 10,
@@ -118,6 +129,11 @@ const styles = StyleSheet.create({
   editIcon: {
     width: 30,
     height: 30
+  },
+  action: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   bottomBar: {
     height: '20%',
