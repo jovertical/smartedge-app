@@ -91,7 +91,9 @@ export default function Answers({ navigation, route }) {
             </Text>
             <Text size="lg">{question.body}</Text>
           </View>
-          <SafeAreaView style={styles.listContainer}>
+          <SafeAreaView
+            style={{ ...styles.listContainer, height: 65 * answers.length }}
+          >
             <FlatList
               data={answers}
               renderItem={({ item, ...props }) => (
@@ -100,6 +102,18 @@ export default function Answers({ navigation, route }) {
               keyExtractor={answer => answer.id.toString()}
             />
           </SafeAreaView>
+          {answers.length < 4 && (
+            <TouchableOpacity
+              style={styles.action}
+              onPress={() =>
+                navigation.navigate('AnswerCreate', {
+                  id: questionId
+                })
+              }
+            >
+              <Text>+ ADD ANSWER</Text>
+            </TouchableOpacity>
+          )}
         </>
       )}
     </Master>
@@ -114,15 +128,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   listContainer: {
-    maxHeight: '80%'
+    maxHeight: '65%'
   },
   listItem: {
     width: '100%',
+    height: 60,
     backgroundColor: 'rgba(52, 52, 52, 0.4)',
     marginBottom: 5,
     padding: 10,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
   listItemContent: {
@@ -132,6 +147,11 @@ const styles = StyleSheet.create({
   editIcon: {
     width: 30,
     height: 30
+  },
+  action: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: 'rgba(52, 52, 52, 0.4)'
   },
   bottomBar: {
     height: '20%',
